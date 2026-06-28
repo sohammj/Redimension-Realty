@@ -44,15 +44,25 @@ export default function Home() {
     { scope: heroRef }
   );
 
-  const clientLogos = [
-    { name: "Afcons Infrastructure", src: "/logo/afcons.png" },
-    { name: "BMC", src: "/logo/bmc.png" },
-    { name: "Dalmia Cement", src: "/logo/dalmia.png" },
-    { name: "Godrej Properties", src: "/logo/godrej.png" },
-    { name: "Mahindra", src: "/logo/mahindra.png" },
-    { name: "MMRDA", src: "/logo/mmrda.png" },
-    { name: "Shapoorji Pallonji", src: "/logo/shapoorji-pallonji.svg" },
-  ];
+    const clientLogos = [
+      { name: "Afcons Infrastructure", src: "/logo/afcons.png" },
+      { name: "BMC", src: "/logo/bmc.png" },
+      { name: "Dalmia Cement", src: "/logo/dalmia.png" },
+      { name: "Godrej Properties", src: "/logo/godrej.png" },
+      { name: "Mahindra", src: "/logo/mahindra.png" },
+      { name: "MMRDA", src: "/logo/mmrda.png" },
+      { name: "Shapoorji Pallonji", src: "/logo/shapoorji-pallonji.svg" },
+
+      { name: "Suraj Estate Developers", src: "/logo/suraj.png" },
+      { name: "Puravankara", src: "/logo/pruvankara.jpeg" },
+      { name: "Regency Group", src: "/logo/regency.png" },
+      { name: "Lotus", src: "/logo/lotus.png" },
+      { name: "Baya", src: "/logo/baya.png" },
+      { name: "Paradigm Realty", src: "/logo/pardigm.png" },
+      { name: "Platinum Corp", src: "/logo/platinum-corp.png" },
+      { name: "K Raheja Corp", src: "/logo/k-raheja-corp.png" },
+      { name: "Joyville", src: "/logo/joyvile.png" },
+    ];
 
   const loopClients = [...clientLogos, ...clientLogos, ...clientLogos];
 
