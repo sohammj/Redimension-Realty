@@ -74,7 +74,7 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
           path,
           {
             strokeDashoffset: -length,
-            attr: { "stroke-width": 200 },
+            attr: { "stroke-width": 680 },
             duration: 0.9,
             ease: "power1.inOut",
             onComplete: () => {
