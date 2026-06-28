@@ -92,7 +92,7 @@ export function Navbar() {
         logoAlt="Redimension Realty Private Limited"
         items={cardNavItems}
         baseColor="#ffffff"
-        menuColor="#0F5A2D"
+        menuColor="#070707"
         buttonBgColor="#C99A2E"
         buttonTextColor="#031126"
       />
