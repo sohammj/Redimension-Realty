@@ -8,7 +8,7 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const mounted = useRef(false);
@@ -19,24 +19,14 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
     return Array.from(svgRef.current.querySelectorAll("path"));
   }
 
-  function getBaseStrokeWidth() {
-    if (typeof window === "undefined") return 200;
-    return window.innerWidth < 768 ? 320 : 200;
-  }
-
-  function getCoverStrokeWidth() {
-    if (typeof window === "undefined") return 680;
-    return window.innerWidth < 768 ? 1150 : 680;
-  }
-
-  function showOverlay() {
-    gsap.set(overlayRef.current, {
+  function showTransitionLayer() {
+    gsap.set(wrapperRef.current, {
       autoAlpha: 1,
     });
   }
 
-  function hideOverlay() {
-    gsap.set(overlayRef.current, {
+  function hideTransitionLayer() {
+    gsap.set(wrapperRef.current, {
       autoAlpha: 0,
     });
   }
@@ -50,11 +40,11 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
       gsap.set(path, {
         strokeDasharray: length,
         strokeDashoffset: length,
-        attr: { "stroke-width": getBaseStrokeWidth() },
+        attr: { "stroke-width": 200 },
       });
     });
 
-    hideOverlay();
+    hideTransitionLayer();
   }
 
   function leave() {
@@ -66,16 +56,18 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
         return;
       }
 
-      showOverlay();
+      showTransitionLayer();
 
-      const timeline = gsap.timeline({ onComplete: resolve });
+      const timeline = gsap.timeline({
+        onComplete: resolve,
+      });
 
       paths.forEach((path) => {
         timeline.to(
           path,
           {
             strokeDashoffset: 0,
-            attr: { "stroke-width": getCoverStrokeWidth() },
+            attr: { "stroke-width": 680 },
             duration: 0.9,
             ease: "power1.inOut",
           },
@@ -90,12 +82,12 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
       const paths = getPaths();
 
       if (!paths.length) {
-        hideOverlay();
+        hideTransitionLayer();
         resolve();
         return;
       }
 
-      showOverlay();
+      showTransitionLayer();
 
       const timeline = gsap.timeline({
         onComplete: () => {
@@ -104,11 +96,11 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
 
             gsap.set(path, {
               strokeDashoffset: length,
-              attr: { "stroke-width": getBaseStrokeWidth() },
+              attr: { "stroke-width": 200 },
             });
           });
 
-          hideOverlay();
+          hideTransitionLayer();
           resolve();
         },
       });
@@ -120,7 +112,7 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
           path,
           {
             strokeDashoffset: -length,
-            attr: { "stroke-width": getBaseStrokeWidth() },
+            attr: { "stroke-width": 200 },
             duration: 0.9,
             ease: "power1.inOut",
           },
@@ -205,8 +197,8 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
       {children}
 
       <div
-        ref={overlayRef}
-        className="fixed inset-0 z-[9999] overflow-hidden opacity-0 pointer-events-none"
+        ref={wrapperRef}
+        className="svg-page-transition pointer-events-none fixed inset-0 z-[9999] opacity-0"
         aria-hidden="true"
       >
         <svg
