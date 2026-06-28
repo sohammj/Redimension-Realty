@@ -85,23 +85,29 @@ export default function CardNav({
 
   const openRef = useRef(false);
   const mobileTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const hoverCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const mobileOverlayRef = useRef<HTMLDivElement | null>(null);
   const mobilePathRef = useRef<SVGPathElement | null>(null);
   const mobileContentRef = useRef<HTMLDivElement | null>(null);
-  const mobileLogoRef = useRef<HTMLAnchorElement | null>(null);
   const mobileInfoRef = useRef<HTMLDivElement | null>(null);
 
-  const mobileLinks = useMemo(
-    () =>
-      items.flatMap((item) =>
-        item.links.map((link) => ({
-          ...link,
-          group: item.label,
-        }))
-      ),
-    [items]
-  );
+  const mobileLinks = useMemo(() => {
+    const allowed = new Set([
+      "About",
+      "Services",
+      "Projects",
+      "Case Studies",
+      "Sectors",
+      "Gallery",
+      "Blog",
+      "Contact",
+    ]);
+
+    return items
+      .flatMap((item) => item.links)
+      .filter((link) => allowed.has(link.label));
+  }, [items]);
 
   const resolvedEase = useMemo<Transition["ease"]>(() => {
     if (ease === "power3.out") return [0.22, 1, 0.36, 1];
@@ -131,6 +137,11 @@ export default function CardNav({
     return window.matchMedia("(max-width: 767px)").matches;
   };
 
+  const isDesktopViewport = () => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(min-width: 768px)").matches;
+  };
+
   const getMobileChars = () =>
     mobileOverlayRef.current?.querySelectorAll(".mobile-menu-char") ?? [];
 
@@ -147,7 +158,6 @@ export default function CardNav({
     gsap.killTweensOf([
       mobilePathRef.current,
       mobileContentRef.current,
-      mobileLogoRef.current,
       mobileInfoRef.current,
       chars,
       rows,
@@ -174,22 +184,19 @@ export default function CardNav({
       attr: { d: mobileOpenHidden },
     });
 
+    gsap.set(rows, {
+      opacity: 0,
+      y: 28,
+    });
+
     gsap.set(chars, {
       opacity: 0,
-      x: "150%",
-    });
-
-    gsap.set(rows, {
-      opacity: 1,
-    });
-
-    gsap.set(mobileLogoRef.current, {
-      opacity: 0,
+      y: 24,
     });
 
     gsap.set(mobileInfoRef.current, {
       opacity: 0,
-      y: 100,
+      y: 32,
     });
 
     const tl = gsap.timeline();
@@ -207,46 +214,38 @@ export default function CardNav({
     });
 
     tl.to(
-      mobileLogoRef.current,
+      rows,
       {
-        duration: 0.1,
+        duration: 0.65,
         opacity: 1,
-        ease: "none",
+        y: 0,
+        ease: "power3.out",
+        stagger: 0.055,
       },
-      "-=0.75"
+      0.42
+    );
+
+    tl.to(
+      chars,
+      {
+        duration: 0.6,
+        opacity: 1,
+        y: 0,
+        ease: "power3.out",
+        stagger: 0.02,
+      },
+      0.48
     );
 
     tl.to(
       mobileInfoRef.current,
       {
-        duration: 0.75,
+        duration: 0.6,
         opacity: 1,
         y: 0,
         ease: "power3.out",
       },
       "-=0.35"
-    );
-
-    tl.to(
-      chars,
-      {
-        duration: 1.5,
-        x: "0%",
-        ease: "elastic.out(1, 0.25)",
-        stagger: 0.01,
-      },
-      0.45
-    );
-
-    tl.to(
-      chars,
-      {
-        duration: 0.75,
-        opacity: 1,
-        ease: "power2.out",
-        stagger: 0.01,
-      },
-      0.45
     );
   };
 
@@ -276,22 +275,19 @@ export default function CardNav({
           attr: { d: mobileOpenHidden },
         });
 
+        gsap.set(rows, {
+          opacity: 0,
+          y: 28,
+        });
+
         gsap.set(chars, {
           opacity: 0,
-          x: "150%",
-        });
-
-        gsap.set(rows, {
-          opacity: 1,
-        });
-
-        gsap.set(mobileLogoRef.current, {
-          opacity: 0,
+          y: 24,
         });
 
         gsap.set(mobileInfoRef.current, {
           opacity: 0,
-          y: 100,
+          y: 32,
         });
 
         mobileTimelineRef.current = null;
@@ -300,26 +296,16 @@ export default function CardNav({
 
     mobileTimelineRef.current = tl;
 
-    tl.to(mobileLogoRef.current, {
-      duration: 0.3,
+    tl.to(rows, {
+      duration: 0.25,
       opacity: 0,
       ease: "none",
     });
 
     tl.to(
-      rows,
-      {
-        duration: 0.3,
-        opacity: 0,
-        ease: "none",
-      },
-      "<"
-    );
-
-    tl.to(
       mobileInfoRef.current,
       {
-        duration: 0.3,
+        duration: 0.25,
         opacity: 0,
         ease: "none",
       },
@@ -341,14 +327,46 @@ export default function CardNav({
     });
   };
 
+  const cancelHoverClose = () => {
+    if (hoverCloseTimerRef.current) {
+      clearTimeout(hoverCloseTimerRef.current);
+      hoverCloseTimerRef.current = null;
+    }
+  };
+
+  const openDesktopNavigation = () => {
+    if (!isDesktopViewport()) return;
+
+    cancelHoverClose();
+
+    if (!openRef.current) {
+      setOpenState(true);
+    }
+  };
+
+  const scheduleDesktopClose = () => {
+    if (!isDesktopViewport()) return;
+
+    cancelHoverClose();
+
+    hoverCloseTimerRef.current = setTimeout(() => {
+      if (openRef.current) {
+        setOpenState(false);
+      }
+
+      hoverCloseTimerRef.current = null;
+    }, 180);
+  };
+
   const closeNavigation = () => {
+    cancelHoverClose();
+
     if (!openRef.current) return;
 
     setOpenState(false);
 
     if (isMobileViewport()) {
       closeMobileMenu();
-      return;
     }
   };
 
@@ -383,22 +401,19 @@ export default function CardNav({
       autoAlpha: 0,
     });
 
+    gsap.set(getMobileRows(), {
+      opacity: 0,
+      y: 28,
+    });
+
     gsap.set(getMobileChars(), {
       opacity: 0,
-      x: "150%",
-    });
-
-    gsap.set(getMobileRows(), {
-      opacity: 1,
-    });
-
-    gsap.set(mobileLogoRef.current, {
-      opacity: 0,
+      y: 24,
     });
 
     gsap.set(mobileInfoRef.current, {
       opacity: 0,
-      y: 100,
+      y: 32,
     });
   }, []);
 
@@ -414,7 +429,10 @@ export default function CardNav({
   const renderAnimatedLabel = (label: string) => (
     <span className="inline-flex overflow-hidden leading-none">
       {label.split("").map((char, index) => (
-        <span key={`${label}-${index}`} className="mobile-menu-char inline-block">
+        <span
+          key={`${label}-${index}`}
+          className="mobile-menu-char inline-block"
+        >
           {char === " " ? "\u00A0" : char}
         </span>
       ))}
@@ -422,7 +440,11 @@ export default function CardNav({
   );
 
   return (
-    <div className={`mx-auto w-full max-w-[1180px] ${className}`}>
+    <div
+      className={`mx-auto w-full max-w-[1180px] ${className}`}
+      onMouseEnter={cancelHoverClose}
+      onMouseLeave={scheduleDesktopClose}
+    >
       <motion.nav
         layout
         className="
@@ -442,6 +464,8 @@ export default function CardNav({
           <button
             type="button"
             onClick={handleToggle}
+            onMouseEnter={openDesktopNavigation}
+            onFocus={openDesktopNavigation}
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
             className="
@@ -650,85 +674,57 @@ export default function CardNav({
 
         <div
           ref={mobileContentRef}
-          className="relative z-10 invisible flex min-h-screen flex-col justify-between px-6 pb-8 pt-28 text-[#031126] opacity-0"
+          className="relative z-10 invisible h-screen overflow-y-auto px-6 pb-10 pt-32 text-[#031126] opacity-0"
         >
-          <Link
-            ref={mobileLogoRef}
-            href="/"
-            aria-label={logoAlt}
-            className="block w-[230px]"
-            onClick={closeNavigation}
-          >
-            <Image
-              src={logo}
-              alt={logoAlt}
-              width={620}
-              height={200}
-              priority
-              quality={100}
-              sizes="230px"
-              className="h-auto w-full object-contain"
-            />
-          </Link>
+          <nav className="border-t border-[#031126]/10">
+            {mobileLinks.map((link) => {
+              const content = (
+                <>
+                  <span>{renderAnimatedLabel(link.label)}</span>
 
-          <div className="mt-10 flex flex-1 flex-col justify-center">
-            <div className="space-y-3">
-              {mobileLinks.map((link, index) => {
-                const content = (
-                  <>
-                    <span className="text-[11px] font-black uppercase tracking-[0.22em] text-[#0F5A2D]/70">
-                      {link.group}
-                    </span>
+                  <ArrowUpRight
+                    size={27}
+                    strokeWidth={2.4}
+                    className="shrink-0 text-[#C99A2E]"
+                  />
+                </>
+              );
 
-                    <span className="mt-1 flex items-center justify-between gap-5 text-[clamp(2.25rem,13vw,4.5rem)] font-black leading-none tracking-[-0.08em] text-[#031126]">
-                      {renderAnimatedLabel(link.label)}
-
-                      <ArrowUpRight
-                        size={24}
-                        className="shrink-0 text-[#C99A2E]"
-                      />
-                    </span>
-                  </>
-                );
-
-                return isExternalHref(link.href) ? (
-                  <a
-                    key={`${link.href}-${index}`}
-                    href={link.href}
-                    aria-label={link.ariaLabel}
-                    className="mobile-menu-row block border-b border-[#031126]/10 py-3"
-                    onClick={closeNavigation}
-                  >
-                    {content}
-                  </a>
-                ) : (
-                  <Link
-                    key={`${link.href}-${index}`}
-                    href={link.href}
-                    aria-label={link.ariaLabel}
-                    className="mobile-menu-row block border-b border-[#031126]/10 py-3"
-                    onClick={closeNavigation}
-                  >
-                    {content}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          <div ref={mobileInfoRef} className="grid gap-3 text-sm text-[#031126]/70">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#063B8F]">
-              Environmental, Forests & Coastal Regulatory Consulting
-            </p>
-
-            <Link
-              href="/contact-us"
-              className="inline-flex w-max items-center gap-2 rounded-full bg-[#C99A2E] px-5 py-3 text-xs font-black uppercase tracking-[0.16em] text-[#031126]"
-              onClick={closeNavigation}
-            >
-              Request Consultation <ArrowUpRight size={15} />
-            </Link>
-          </div>
+              return isExternalHref(link.href) ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  aria-label={link.ariaLabel}
+                  className="
+                    mobile-menu-row flex items-center justify-between gap-5
+                    border-b border-[#031126]/10 py-3.5
+                    text-[clamp(2.45rem,11vw,4.3rem)]
+                    font-black leading-[0.9] tracking-[-0.075em]
+                    text-[#031126]
+                  "
+                  onClick={closeNavigation}
+                >
+                  {content}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-label={link.ariaLabel}
+                  className="
+                    mobile-menu-row flex items-center justify-between gap-5
+                    border-b border-[#031126]/10 py-3.5
+                    text-[clamp(2.45rem,11vw,4.3rem)]
+                    font-black leading-[0.9] tracking-[-0.075em]
+                    text-[#031126]
+                  "
+                  onClick={closeNavigation}
+                >
+                  {content}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
       </div>
     </div>

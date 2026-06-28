@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
@@ -17,6 +18,11 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
   function getPaths() {
     if (!svgRef.current) return [];
     return Array.from(svgRef.current.querySelectorAll("path"));
+  }
+
+  function isPhoneViewport() {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 767px)").matches;
   }
 
   function showTransitionLayer() {
@@ -134,13 +140,21 @@ export function SvgPageTransition({ children }: { children: ReactNode }) {
 
     if (!transitioning.current) return;
 
-    async function runEnter() {
+    async function runAfterRouteChange() {
       window.scrollTo(0, 0);
+
+      if (isPhoneViewport()) {
+        setupPaths();
+        hideTransitionLayer();
+        transitioning.current = false;
+        return;
+      }
+
       await enter();
       transitioning.current = false;
     }
 
-    runEnter();
+    runAfterRouteChange();
   }, [pathname]);
 
   useEffect(() => {
