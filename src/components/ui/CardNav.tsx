@@ -97,7 +97,6 @@ export default function CardNav({
       "About",
       "Services",
       "Projects",
-      "Case Studies",
       "Sectors",
       "Gallery",
       "Blog",
@@ -441,7 +440,7 @@ export default function CardNav({
 
   return (
     <div
-      className={`mx-auto w-full max-w-[1180px] ${className}`}
+      className={`mx-auto w-full ${items.length <= 2 ? "max-w-[900px]" : "max-w-[1180px]"} ${className}`}
       onMouseEnter={cancelHoverClose}
       onMouseLeave={scheduleDesktopClose}
     >
@@ -574,7 +573,11 @@ export default function CardNav({
               transition={transition}
               className="relative z-10 hidden overflow-hidden md:block"
             >
-              <div className="grid gap-3 p-3 pt-0 md:grid-cols-3">
+              <div
+                    className={`grid gap-3 p-3 pt-0 ${
+                        items.length <= 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+                    }`}
+                >
                 {items.map((item, index) => (
                   <motion.section
                     key={item.label}
@@ -586,7 +589,7 @@ export default function CardNav({
                       delay: index * 0.06,
                     }}
                     className="
-                      relative min-h-[190px] overflow-hidden rounded-[1.5rem] p-5
+                      relative min-h-[165px] overflow-hidden rounded-[1.5rem] p-4
                       border border-white/20
                       shadow-[0_18px_45px_rgba(3,17,38,0.14),inset_0_1px_0_rgba(255,255,255,0.22)]
                       backdrop-blur-[22px] backdrop-saturate-150
@@ -608,7 +611,11 @@ export default function CardNav({
                       </p>
                     </div>
 
-                    <div className="relative z-10 grid gap-2">
+                    <div
+                        className={`relative z-10 grid gap-2 ${
+                            item.links.length > 4 ? "sm:grid-cols-2" : ""
+                        }`}
+                    >
                       {item.links.map((link) =>
                         isExternalHref(link.href) ? (
                           <a
