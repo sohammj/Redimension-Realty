@@ -7,9 +7,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Leaf, ShieldCheck } from "lucide-react";
+import CompanySnapshotSection from "@/src/components/sections/CompanySnapshotSection";
 import {
   approach,
-  businessSegments,
   coreServices,
   featuredProjects,
   siteConfig,
@@ -106,45 +106,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section className="section-padding bg-white">
-        <div className="container-shell">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-              <p className="eyebrow">Company Snapshot</p>
-              <h2 className="section-title mt-4">
-                A specialist advisory firm for complex approvals.
-              </h2>
-            </div>
-
-            <p className="section-subtitle">
-              Redimension Realty operates at the intersection of regulatory
-              governance, sustainable development and project facilitation —
-              combining technical documentation, institutional coordination and
-              execution-focused liaisoning.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {businessSegments.map((segment, index) => (
-              <div key={segment.title} className="premium-card rounded-[2rem] p-6">
-                <p className="text-sm font-black text-[#c99a2e]">
-                  0{index + 1}
-                </p>
-
-                <h3 className="mt-5 text-xl font-black tracking-[-0.04em] text-[#031126]">
-                  {segment.title}
-                </h3>
-
-                <p className="mt-4 text-sm leading-7 text-[#526174]">
-                  {segment.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      <CompanySnapshotSection />
       <section className="section-padding coastal-pattern bg-[#fbfaf5]">
         <div className="container-shell">
           <div className="max-w-3xl">
