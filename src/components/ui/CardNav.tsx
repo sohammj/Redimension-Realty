@@ -280,10 +280,10 @@ export default function CardNav({
                 style={{ backgroundColor: textColor }}
               />
             </span>
-
+{/* 
             <span className="hidden text-xs font-black uppercase tracking-[0.18em] md:block">
               {open ? "Close" : "Menu"}
-            </span>
+            </span> */}
           </button>
 
           <Link
