@@ -145,36 +145,6 @@ export const values = [
   },
 ];
 
-export const featuredProjects = [
-  {
-    name: "Environmental & CRZ Advisory Portfolio",
-    location: "Pan-India",
-    client: "Leading real estate and infrastructure developers",
-    service: "Environmental, Forest & Coastal Regulatory Advisory",
-    status: "Ongoing / Completed",
-  },
-  {
-    name: "BMC Public Utility Infrastructure",
-    location: "Mumbai",
-    client: "Brihanmumbai Municipal Corporation",
-    service: "Parking towers and public utility infrastructure",
-    status: "Project Portfolio",
-  },
-  {
-    name: "MMRDA Urban Development Projects",
-    location: "Mumbai Metropolitan Region",
-    client: "MMRDA",
-    service: "Urban infrastructure and project execution support",
-    status: "Project Portfolio",
-  },
-  {
-    name: "SRA / Affordable Housing Development",
-    location: "Mumbai MMR",
-    client: "Maharashtra Housing Department / SRA",
-    service: "Budget housing and redevelopment",
-    status: "Ongoing",
-  },
-];
 
 export const blogPosts = [
   {
@@ -194,5 +164,34 @@ export const blogPosts = [
     category: "Sustainability",
     excerpt:
       "Balancing growth, governance and ecological responsibility across real estate and infrastructure projects.",
+  },
+];
+
+
+
+export const featuredProjects = [
+  {
+    name: "Multi-Level Automated Parking Infrastructure",
+    status: "Institutional Project",
+    location: "Mumbai, Maharashtra",
+    client: "BMC",
+    service: "Public utility infrastructure and project execution.",
+    image: "/projects/bmc-parking.jpg",
+  },
+  {
+    name: "Urban Infrastructure Development",
+    status: "Government Engagement",
+    location: "Mumbai Metropolitan Region",
+    client: "MMRDA",
+    service: "Urban infrastructure development and statutory coordination.",
+    image: "/projects/mmrda-infrastructure.jpg",
+  },
+  {
+    name: "SRA Housing Development",
+    status: "Redevelopment",
+    location: "Mumbai Metropolitan Region",
+    client: "Maharashtra Housing Department",
+    service: "Affordable housing, rehabilitation and development execution.",
+    image: "/projects/sra-housing.jpg",
   },
 ];

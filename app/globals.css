@@ -97,7 +97,7 @@ a {
 .logo-loop {
   display: flex;
   width: max-content;
-  animation: logoLoop 32s linear infinite;
+  animation: logoLoop 40s linear infinite;
 }
 
 .logo-loop:hover {

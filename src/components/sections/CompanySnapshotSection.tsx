@@ -84,7 +84,7 @@ export default function CompanySnapshotSection() {
       <div className="container-shell relative">
         <div className="grid gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div className="max-w-[650px]">
-            <h2 className="mt-5 max-w-[600px] text-[clamp(2.4rem,3.75vw,4.35rem)] font-semibold leading-[0.97] tracking-[-0.055em] text-[#031126]">
+            <h2 className="mt-5 max-w-[600px] text-[clamp(2.4rem,3.75vw,4.35rem)] font-[var(--font-cormorant)] leading-[0.97] tracking-[-0.055em] text-[#031126]">
                 Where environmental intelligence meets responsible development.
             </h2>
 
@@ -96,7 +96,7 @@ export default function CompanySnapshotSection() {
               government bodies across India.
             </p>
 
-            <p className="mt-6 max-w-[580px] border-l-2 border-[#c99a2e] pl-5 text-[1.08rem] font-semibold leading-8 text-[#183427]">
+            <p className="mt-6 max-w-[580px] border-l-2 border-[#c99a2e] pl-5 text-[1.08rem] font-[var(--font-cormorant)] leading-8 text-[#183427]">
               Backed by execution capabilities across redevelopment, SRA
               housing, BMC/MMRDA public infrastructure and AMRUT water-resource
               projects.
@@ -105,7 +105,7 @@ export default function CompanySnapshotSection() {
             <div className="mt-8 flex">
               <Link
                 href="/about-us"
-                className="group inline-flex min-h-[50px] items-center gap-4 rounded-[2px] bg-[#0f5a2d] px-5 text-[13px] font-black uppercase tracking-[0.14em] text-white transition hover:bg-[#174f31]"
+                className="group inline-flex min-h-[50px] items-center gap-4 rounded-[2px] bg-[#0f5a2d] px-5 text-[13px] font-black  tracking-[0.14em] text-white transition hover:bg-[#174f31]"
               >
                 About Redimension
                 <ArrowRight
@@ -152,7 +152,7 @@ export default function CompanySnapshotSection() {
                               </span>
                             </div>
 
-                            <h3 className="mt-5 max-w-[360px] text-[1.9rem] font-extrabold leading-[0.96] tracking-[-0.055em] text-[#031126] md:mt-9 md:max-w-[380px] md:text-[clamp(1.65rem,2.1vw,2.35rem)]">
+                            <h3 className="mt-5 max-w-[360px] text-[1.9rem] font-[var(--font-cormorant)] leading-[0.96] tracking-[-0.055em] text-[#031126] md:mt-9 md:max-w-[380px] md:text-[clamp(1.65rem,2.1vw,2.35rem)]">
                               {segment.title}
                             </h3>
 

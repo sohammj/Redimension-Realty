@@ -371,7 +371,7 @@ export default function CardNav({
               "
             >
               <div className="mx-auto w-full max-w-xl">
-                <div className="pb-7 pt-6">
+                {/* <div className="pb-7 pt-6">
                   <label className="relative block">
                     <span className="sr-only">Search pages</span>
                     <input
@@ -392,7 +392,8 @@ export default function CardNav({
                       className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2"
                     />
                   </label>
-                </div>
+                </div> */}
+                <p><br/></p>
 
                 <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#8aae45]">
                   Explore Redimension

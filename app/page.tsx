@@ -15,11 +15,12 @@ import {
 } from "lucide-react";
 
 import CompanySnapshotSection from "@/src/components/sections/CompanySnapshotSection";
+import CoreServicesSection from "@/src/components/sections/CoreServicesSection";
+import WhyChooseUsSection from "@/src/components/sections/WhyChooseUsSection";
+import TrustedBySection from "@/src/components/sections/TrustedBySection";
+import FeaturedProjectsSection from "@/src/components/sections/FeaturedProjectsSection";
 import {
-  approach,
-  coreServices,
   featuredProjects,
-  values,
 } from "@/src/data/site";
 
 const cormorant = Cormorant_Garamond({
@@ -34,6 +35,8 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700"],
   variable: "--font-manrope",
 });
+
+
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -146,206 +149,10 @@ export default function Home() {
       </section>
 
       <CompanySnapshotSection />
-
-      <section className="section-padding coastal-pattern bg-[#fbfaf5]">
-        <div className="container-shell">
-          <div className="max-w-3xl">
-            <p className="eyebrow">Core Services</p>
-
-            <h2 className="section-title mt-4">
-              Regulatory strategy, documentation and approvals support.
-            </h2>
-          </div>
-
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {coreServices.map((service) => (
-              <Link
-                href="/services"
-                key={service.title}
-                className="group rounded-[2rem] border border-[#c99a2e]/20 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-2xl"
-              >
-                <div className="mb-7 grid h-14 w-14 place-items-center rounded-full bg-[#0f5a2d]/10 text-[#0f5a2d]">
-                  <Leaf />
-                </div>
-
-                <h3 className="text-xl font-black tracking-[-0.04em] text-[#031126]">
-                  {service.title}
-                </h3>
-
-                <p className="mt-4 text-sm leading-7 text-[#526174]">
-                  {service.summary}
-                </p>
-
-                <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-[#0f5a2d]">
-                  Learn more
-
-                  <ArrowRight
-                    size={15}
-                    className="transition group-hover:translate-x-1"
-                  />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-[#031126] text-white">
-        <div className="container-shell">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div>
-              <p className="eyebrow">Our Approach</p>
-
-              <h2 className="mt-4 text-5xl font-black leading-none tracking-[-0.06em]">
-                Structured, compliant and execution-driven.
-              </h2>
-
-              <p className="mt-6 leading-8 text-white/60">
-                Every engagement is designed to reduce approval ambiguity,
-                align stakeholders and support responsible development
-                outcomes.
-              </p>
-            </div>
-
-            <div className="grid gap-4">
-              {approach.map((step, index) => (
-                <div
-                  key={step}
-                  className="flex items-center gap-5 rounded-full border border-white/10 bg-white/5 p-4"
-                >
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#c99a2e] font-black text-[#031126]">
-                    {index + 1}
-                  </span>
-
-                  <span className="font-bold text-white/82">{step}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-white">
-        <div className="container-shell">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-            <div>
-              <p className="eyebrow">Why Choose Us</p>
-
-              <h2 className="section-title mt-4">
-                Domain depth with institutional credibility.
-              </h2>
-            </div>
-
-            <div className="grid gap-5 sm:grid-cols-2">
-              {values.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-[2rem] border border-[#071b3a]/10 p-6"
-                >
-                  <ShieldCheck className="text-[#0f5a2d]" />
-
-                  <h3 className="mt-5 text-xl font-black tracking-[-0.04em]">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-3 text-sm leading-7 text-[#526174]">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="overflow-hidden py-16">
-        <div className="container-shell">
-          <div className="text-center">
-            <p className="eyebrow">Trusted By</p>
-
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.05em]">
-              Associated with leading developers, infrastructure groups and
-              public institutions.
-            </h2>
-          </div>
-        </div>
-
-        <div className="relative mt-10 overflow-hidden py-10">
-          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-28 bg-gradient-to-r from-white to-transparent" />
-
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-28 bg-gradient-to-l from-white to-transparent" />
-
-          <div className="logo-loop items-center gap-20">
-            {loopClients.map((client, index) => (
-              <div
-                key={`${client.name}-${index}`}
-                className="flex h-20 min-w-40 items-center justify-center"
-              >
-                <Image
-                  src={client.src}
-                  alt={`${client.name} logo`}
-                  width={180}
-                  height={80}
-                  unoptimized
-                  className="max-h-14 w-auto object-contain opacity-80 transition duration-300 hover:scale-105 hover:opacity-100"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-[#fbfaf5]">
-        <div className="container-shell">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="eyebrow">Featured Projects</p>
-
-              <h2 className="section-title mt-4">
-                Project and institutional exposure.
-              </h2>
-            </div>
-
-            <Link
-              href="/projects"
-              className="font-black uppercase tracking-[0.14em] text-[#0f5a2d]"
-            >
-              View Projects →
-            </Link>
-          </div>
-
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {featuredProjects.map((project) => (
-              <div
-                key={project.name}
-                className="glass-card rounded-[2rem] p-7"
-              >
-                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#c99a2e]">
-                  {project.status}
-                </p>
-
-                <h3 className="mt-4 text-2xl font-black tracking-[-0.05em]">
-                  {project.name}
-                </h3>
-
-                <div className="mt-5 space-y-2 text-sm leading-7 text-[#526174]">
-                  <p>
-                    <strong>Location:</strong> {project.location}
-                  </p>
-
-                  <p>
-                    <strong>Client:</strong> {project.client}
-                  </p>
-
-                  <p>
-                    <strong>Service:</strong> {project.service}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CoreServicesSection />
+      <WhyChooseUsSection />
+      <TrustedBySection clients={clientLogos} />
+      <FeaturedProjectsSection projects={featuredProjects} />
     </main>
   );
 }
