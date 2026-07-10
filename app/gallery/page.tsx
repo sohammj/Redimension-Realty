@@ -13,9 +13,9 @@ export default function GalleryPage() {
         <div className="container-shell">
           <p className="eyebrow">Gallery</p>
 
-          <h1 className="section-title mt-4 max-w-5xl">
+          {/* <h1 className="section-title mt-4 max-w-5xl">
             Project photos, site visits.
-          </h1>
+          </h1> */}
           <GalleryBento />
         </div>
       </section>
