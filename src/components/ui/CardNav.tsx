@@ -217,26 +217,42 @@ export default function CardNav({
           transition-[height,border-radius,box-shadow] duration-700
           ease-[cubic-bezier(0.22,1,0.36,1)]
           ${
-            open
-              ? "max-md:h-[calc(100dvh-2rem)] max-md:rounded-[1.75rem] max-md:shadow-[0_24px_70px_rgba(3,17,38,0.24)]"
-              : "max-md:h-[76px] max-md:rounded-[2rem]"
-          }
+              open
+                ? `
+                  max-md:h-[calc(100dvh-2rem)]
+                  max-md:rounded-[1.75rem]
+                  max-md:border-white/45
+                  max-md:shadow-[0_28px_80px_rgba(3,17,38,0.22),inset_0_1px_0_rgba(255,255,255,0.7)]
+                `
+                : "max-md:h-[76px] max-md:rounded-[2rem]"
+            }
           md:rounded-[2rem]
         `}
         style={{
           backgroundColor: navBackground,
-          WebkitBackdropFilter: "blur(26px) saturate(150%)",
-          backdropFilter: "blur(26px) saturate(150%)",
+          WebkitBackdropFilter: "blur(22px) saturate(145%)",
+          backdropFilter: "blur(22px) saturate(145%)",
         }}
         aria-label="Main navigation"
       >
-        <motion.div
+        {/* <motion.div
           aria-hidden="true"
-          className="absolute inset-0 bg-[#fbfaf5] md:hidden"
+          className="
+            absolute inset-0 md:hidden
+            bg-[linear-gradient(145deg,rgba(255,255,255,0.28),rgba(247,245,238,0.12))]
+            backdrop-blur-[24px] backdrop-saturate-150
+          "
           initial={false}
           animate={{ opacity: open ? 1 : 0 }}
-          transition={{ duration: open ? 0.38 : 0.2, ease: resolvedEase }}
-        />
+          transition={{
+            duration: open ? 0.38 : 0.2,
+            ease: resolvedEase,
+          }}
+          style={{
+            WebkitBackdropFilter: "blur(24px) saturate(150%)",
+            backdropFilter: "blur(24px) saturate(150%)",
+          }}
+        /> */}
 
         <div
           className={`
@@ -361,8 +377,8 @@ export default function CardNav({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{
-                duration: open ? 0.46 : 0.18,
-                delay: open ? 0.14 : 0,
+                duration: 0.35,
+                delay: 0,
                 ease: resolvedEase,
               }}
               className="
@@ -393,20 +409,30 @@ export default function CardNav({
                     />
                   </label>
                 </div> */}
-                <p><br/></p>
+                <div className="h-7" />
 
-                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#8aae45]">
+                {/* <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#8aae45]">
                   Explore Redimension
-                </p>
+                </p> */}
 
-                <nav className="border-t border-[#24372a]/15">
+                {/* <nav className="overflow-hidden rounded-[1.25rem] border border-white/35 bg-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] backdrop-blur-xl"> */}
+                <nav
+                  className="
+                    overflow-hidden rounded-[1.25rem]
+                    border border-white/25
+                    bg-white/[0.06]
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]
+                  "
+                >
                   {filteredMobileLinks.map((link, index) => {
                     const rowClassName = `
                       group flex min-h-[64px] items-center justify-between gap-5
-                      border-b border-[#24372a]/15 py-3.5
+                      border-b border-[#24372a]/10
+                      bg-transparent px-4 py-3.5
                       text-[clamp(1.25rem,5.6vw,1.65rem)] font-normal
                       leading-tight tracking-[-0.025em] text-[#344f39]
-                      transition-colors hover:text-[#0F5A2D]
+                      transition-all duration-300
+                      hover:bg-white/20 hover:text-[#0F5A2D]
                     `;
 
                     const rowContent = (
