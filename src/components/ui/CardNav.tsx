@@ -4,8 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
-import gsap from "gsap";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Search } from "lucide-react";
 
 type CardNavLink = {
   label: string;
@@ -48,24 +47,16 @@ const hexToRgba = (hex: string, alpha: number) => {
     clean.length === 3
       ? clean
           .split("")
-          .map((char) => char + char)
+          .map((character) => character + character)
           .join("")
       : clean;
 
-  const r = parseInt(full.slice(0, 2), 16);
-  const g = parseInt(full.slice(2, 4), 16);
-  const b = parseInt(full.slice(4, 6), 16);
+  const red = parseInt(full.slice(0, 2), 16);
+  const green = parseInt(full.slice(2, 4), 16);
+  const blue = parseInt(full.slice(4, 6), 16);
 
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 };
-
-const mobileOpenHidden = "M100,0 Q50,0 0,0 L0,0 L100,0 Z";
-const mobileOpenBulge = "M100,44 Q50,86 0,44 L0,0 L100,0 Z";
-const mobileOpenFull = "M100,100 Q50,100 0,100 L0,0 L100,0 Z";
-
-const mobileCloseStart = "M100,0 Q50,0 0,0 L0,100 L100,100 Z";
-const mobileCloseBulge = "M100,58 Q50,22 0,58 L0,100 L100,100 Z";
-const mobileCloseHidden = "M100,100 Q50,100 0,100 L0,100 L100,100 Z";
 
 export default function CardNav({
   logo,
@@ -82,31 +73,48 @@ export default function CardNav({
   className = "",
 }: CardNavProps) {
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const openRef = useRef(false);
-  const mobileTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const hoverCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const mobileOverlayRef = useRef<HTMLDivElement | null>(null);
-  const mobilePathRef = useRef<SVGPathElement | null>(null);
-  const mobileContentRef = useRef<HTMLDivElement | null>(null);
-  const mobileInfoRef = useRef<HTMLDivElement | null>(null);
-
   const mobileLinks = useMemo(() => {
-    const allowed = new Set([
+    const allowedLabels = new Set([
       "About",
-      "Services",
       "Projects",
+      "Services",
       "Sectors",
+      "Clients",
+      "Careers",
       "Gallery",
       "Blog",
       "Contact",
     ]);
 
-    return items
+    const links = items
       .flatMap((item) => item.links)
-      .filter((link) => allowed.has(link.label));
-  }, [items]);
+      .filter((link) => allowedLabels.has(link.label));
+
+    if (!links.some((link) => link.href === ctaHref)) {
+      links.push({
+        label: "Contact",
+        href: ctaHref,
+        ariaLabel: "Contact Redimension Realty",
+      });
+    }
+
+    return links;
+  }, [ctaHref, items]);
+
+  const filteredMobileLinks = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) return mobileLinks;
+
+    return mobileLinks.filter((link) =>
+      link.label.toLowerCase().includes(query),
+    );
+  }, [mobileLinks, searchQuery]);
 
   const resolvedEase = useMemo<Transition["ease"]>(() => {
     if (ease === "power3.out") return [0.22, 1, 0.36, 1];
@@ -115,25 +123,19 @@ export default function CardNav({
   }, [ease]);
 
   const transition: Transition = {
-    duration: 0.55,
+    duration: 0.5,
     ease: resolvedEase,
   };
 
   const textColor = theme === "dark" ? "#ffffff" : menuColor;
-
   const navBackground =
-    theme === "dark"
-      ? "rgba(3, 17, 38, 0.28)"
-      : hexToRgba(baseColor, 0.22);
+    theme === "dark" ? "rgba(3, 17, 38, 0.28)" : hexToRgba(baseColor, 0.22);
 
   const setOpenState = (value: boolean) => {
     openRef.current = value;
     setOpen(value);
-  };
 
-  const isMobileViewport = () => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(max-width: 767px)").matches;
+    if (!value) setSearchQuery("");
   };
 
   const isDesktopViewport = () => {
@@ -141,325 +143,108 @@ export default function CardNav({
     return window.matchMedia("(min-width: 768px)").matches;
   };
 
-  const getMobileChars = () =>
-    mobileOverlayRef.current?.querySelectorAll(".mobile-menu-char") ?? [];
-
-  const getMobileRows = () =>
-    mobileOverlayRef.current?.querySelectorAll(".mobile-menu-row") ?? [];
-
-  const stopMobileAnimation = () => {
-    mobileTimelineRef.current?.kill();
-    mobileTimelineRef.current = null;
-
-    const chars = getMobileChars();
-    const rows = getMobileRows();
-
-    gsap.killTweensOf([
-      mobilePathRef.current,
-      mobileContentRef.current,
-      mobileInfoRef.current,
-      chars,
-      rows,
-    ]);
-  };
-
-  const openMobileMenu = () => {
-    if (!mobileOverlayRef.current || !mobilePathRef.current) return;
-
-    stopMobileAnimation();
-
-    const chars = getMobileChars();
-    const rows = getMobileRows();
-
-    gsap.set(mobileOverlayRef.current, {
-      pointerEvents: "auto",
-    });
-
-    gsap.set(mobileContentRef.current, {
-      autoAlpha: 1,
-    });
-
-    gsap.set(mobilePathRef.current, {
-      attr: { d: mobileOpenHidden },
-    });
-
-    gsap.set(rows, {
-      opacity: 0,
-      y: 28,
-    });
-
-    gsap.set(chars, {
-      opacity: 0,
-      y: 24,
-    });
-
-    gsap.set(mobileInfoRef.current, {
-      opacity: 0,
-      y: 32,
-    });
-
-    const tl = gsap.timeline();
-
-    mobileTimelineRef.current = tl;
-
-    tl.to(mobilePathRef.current, {
-      duration: 0.5,
-      attr: { d: mobileOpenBulge },
-      ease: "power4.in",
-    }).to(mobilePathRef.current, {
-      duration: 0.5,
-      attr: { d: mobileOpenFull },
-      ease: "power4.out",
-    });
-
-    tl.to(
-      rows,
-      {
-        duration: 0.65,
-        opacity: 1,
-        y: 0,
-        ease: "power3.out",
-        stagger: 0.055,
-      },
-      0.42
-    );
-
-    tl.to(
-      chars,
-      {
-        duration: 0.6,
-        opacity: 1,
-        y: 0,
-        ease: "power3.out",
-        stagger: 0.02,
-      },
-      0.48
-    );
-
-    tl.to(
-      mobileInfoRef.current,
-      {
-        duration: 0.6,
-        opacity: 1,
-        y: 0,
-        ease: "power3.out",
-      },
-      "-=0.35"
-    );
-  };
-
-  const closeMobileMenu = () => {
-    if (!mobileOverlayRef.current || !mobilePathRef.current) return;
-
-    stopMobileAnimation();
-
-    const chars = getMobileChars();
-    const rows = getMobileRows();
-
-    gsap.set(mobilePathRef.current, {
-      attr: { d: mobileCloseStart },
-    });
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        gsap.set(mobileOverlayRef.current, {
-          pointerEvents: "none",
-        });
-
-        gsap.set(mobileContentRef.current, {
-          autoAlpha: 0,
-        });
-
-        gsap.set(mobilePathRef.current, {
-          attr: { d: mobileOpenHidden },
-        });
-
-        gsap.set(rows, {
-          opacity: 0,
-          y: 28,
-        });
-
-        gsap.set(chars, {
-          opacity: 0,
-          y: 24,
-        });
-
-        gsap.set(mobileInfoRef.current, {
-          opacity: 0,
-          y: 32,
-        });
-
-        mobileTimelineRef.current = null;
-      },
-    });
-
-    mobileTimelineRef.current = tl;
-
-    tl.to(rows, {
-      duration: 0.25,
-      opacity: 0,
-      ease: "none",
-    });
-
-    tl.to(
-      mobileInfoRef.current,
-      {
-        duration: 0.25,
-        opacity: 0,
-        ease: "none",
-      },
-      "<"
-    );
-
-    tl.to(
-      mobilePathRef.current,
-      {
-        duration: 0.5,
-        attr: { d: mobileCloseBulge },
-        ease: "power3.in",
-      },
-      "<"
-    ).to(mobilePathRef.current, {
-      duration: 0.5,
-      attr: { d: mobileCloseHidden },
-      ease: "power3.out",
-    });
-  };
-
   const cancelHoverClose = () => {
-    if (hoverCloseTimerRef.current) {
-      clearTimeout(hoverCloseTimerRef.current);
-      hoverCloseTimerRef.current = null;
-    }
+    if (!hoverCloseTimerRef.current) return;
+
+    clearTimeout(hoverCloseTimerRef.current);
+    hoverCloseTimerRef.current = null;
   };
 
   const openDesktopNavigation = () => {
     if (!isDesktopViewport()) return;
 
     cancelHoverClose();
-
-    if (!openRef.current) {
-      setOpenState(true);
-    }
+    if (!openRef.current) setOpenState(true);
   };
 
   const scheduleDesktopClose = () => {
     if (!isDesktopViewport()) return;
 
     cancelHoverClose();
-
     hoverCloseTimerRef.current = setTimeout(() => {
-      if (openRef.current) {
-        setOpenState(false);
-      }
-
+      setOpenState(false);
       hoverCloseTimerRef.current = null;
     }, 180);
   };
 
   const closeNavigation = () => {
     cancelHoverClose();
-
-    if (!openRef.current) return;
-
     setOpenState(false);
-
-    if (isMobileViewport()) {
-      closeMobileMenu();
-    }
   };
 
   const handleToggle = () => {
-    if (isMobileViewport()) {
-      const nextOpen = !openRef.current;
-
-      setOpenState(nextOpen);
-
-      if (nextOpen) {
-        openMobileMenu();
-      } else {
-        closeMobileMenu();
-      }
-
-      return;
-    }
-
+    cancelHoverClose();
     setOpenState(!openRef.current);
   };
 
   useEffect(() => {
-    gsap.set(mobilePathRef.current, {
-      attr: { d: mobileOpenHidden },
-    });
-
-    gsap.set(mobileOverlayRef.current, {
-      pointerEvents: "none",
-    });
-
-    gsap.set(mobileContentRef.current, {
-      autoAlpha: 0,
-    });
-
-    gsap.set(getMobileRows(), {
-      opacity: 0,
-      y: 28,
-    });
-
-    gsap.set(getMobileChars(), {
-      opacity: 0,
-      y: 24,
-    });
-
-    gsap.set(mobileInfoRef.current, {
-      opacity: 0,
-      y: 32,
-    });
-  }, []);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeNavigation();
     };
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  });
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
-  const renderAnimatedLabel = (label: string) => (
-    <span className="inline-flex overflow-hidden leading-none">
-      {label.split("").map((char, index) => (
-        <span
-          key={`${label}-${index}`}
-          className="mobile-menu-char inline-block"
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
+  useEffect(() => {
+    if (!open || isDesktopViewport()) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    return () => cancelHoverClose();
+  }, []);
 
   return (
     <div
-      className={`mx-auto w-full ${items.length <= 2 ? "max-w-[900px]" : "max-w-[1180px]"} ${className}`}
+      className={`mx-auto w-full ${
+        items.length <= 2 ? "max-w-[980px]" : "max-w-[1180px]"
+      } ${className}`}
       onMouseEnter={cancelHoverClose}
       onMouseLeave={scheduleDesktopClose}
     >
-      <motion.nav
-        layout
-        className="
-          relative z-[70] isolate overflow-hidden rounded-[2rem]
-          border border-white/35
+      <nav
+        className={`
+          relative z-[70] isolate overflow-hidden border border-white/35
           shadow-[0_18px_55px_rgba(3,17,38,0.14),inset_0_1px_0_rgba(255,255,255,0.55)]
           backdrop-blur-[26px] backdrop-saturate-150
-        "
+          transition-[height,border-radius,box-shadow] duration-700
+          ease-[cubic-bezier(0.22,1,0.36,1)]
+          ${
+            open
+              ? "max-md:h-[calc(100dvh-2rem)] max-md:rounded-[1.75rem] max-md:shadow-[0_24px_70px_rgba(3,17,38,0.24)]"
+              : "max-md:h-[76px] max-md:rounded-[2rem]"
+          }
+          md:rounded-[2rem]
+        `}
         style={{
           backgroundColor: navBackground,
           WebkitBackdropFilter: "blur(26px) saturate(150%)",
           backdropFilter: "blur(26px) saturate(150%)",
         }}
-        transition={transition}
+        aria-label="Main navigation"
       >
-        <div className="relative z-10 flex h-[76px] items-center justify-between px-4 sm:px-5">
+        <motion.div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[#fbfaf5] md:hidden"
+          initial={false}
+          animate={{ opacity: open ? 1 : 0 }}
+          transition={{ duration: open ? 0.38 : 0.2, ease: resolvedEase }}
+        />
+
+        <div
+          className={`
+            relative z-20 flex h-[76px] items-center border-b px-4
+            transition-colors duration-300 sm:px-6 md:h-[88px] md:justify-between md:border-transparent
+            ${open ? "max-md:border-[#24372a]/10" : "max-md:border-transparent"}
+          `}
+        >
           <button
             type="button"
             onClick={handleToggle}
@@ -467,34 +252,36 @@ export default function CardNav({
             onFocus={openDesktopNavigation}
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
+            aria-controls="mobile-navigation-panel"
             className="
-              group flex h-12 min-w-12 touch-manipulation items-center gap-3 rounded-full px-3
-              transition hover:bg-white/25
+              group order-3 ml-auto flex h-12 min-w-12 touch-manipulation
+              items-center justify-center gap-3 rounded-full px-3 transition
+              hover:bg-black/5 md:order-1 md:ml-0 md:justify-start md:hover:bg-white/25
             "
             style={{ color: textColor }}
           >
-            <span className="relative h-4 w-6">
+            <span className="relative h-4 w-6" aria-hidden="true">
               <span
                 className={`absolute left-0 top-0 h-[2px] w-6 rounded-full transition duration-300 ${
                   open ? "translate-y-[7px] rotate-45" : ""
                 }`}
-                style={{ backgroundColor: menuColor }}
+                style={{ backgroundColor: textColor }}
               />
               <span
-                className={`absolute left-0 top-[7px] h-[2px] w-6 rounded-full transition duration-300 ${
-                  open ? "opacity-0" : "opacity-100"
+                className={`absolute left-0 top-[7px] h-[2px] w-6 rounded-full transition duration-200 ${
+                  open ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
                 }`}
-                style={{ backgroundColor: menuColor }}
+                style={{ backgroundColor: textColor }}
               />
               <span
                 className={`absolute left-0 top-[14px] h-[2px] w-6 rounded-full transition duration-300 ${
                   open ? "-translate-y-[7px] -rotate-45" : ""
                 }`}
-                style={{ backgroundColor: menuColor }}
+                style={{ backgroundColor: textColor }}
               />
             </span>
 
-            <span className="hidden text-xs font-black uppercase tracking-[0.18em] sm:block">
+            <span className="hidden text-xs font-black uppercase tracking-[0.18em] md:block">
               {open ? "Close" : "Menu"}
             </span>
           </button>
@@ -503,24 +290,25 @@ export default function CardNav({
             href="/"
             aria-label={logoAlt}
             className="
-              absolute left-1/2 top-1/2 z-20 flex
-              h-[52px] w-[205px]
-              -translate-x-1/2 -translate-y-1/2
-              items-center justify-center sm:w-[235px]
+              order-1 z-20 flex h-[58px] w-[190px] items-center justify-start
+              min-[380px]:w-[225px]
+              md:absolute md:left-1/2 md:top-1/2 md:h-[76px] md:w-[340px]
+              md:-translate-x-1/2 md:-translate-y-1/2 md:justify-center
             "
             onClick={closeNavigation}
           >
             <Image
               src={logo}
               alt={logoAlt}
-              width={620}
-              height={200}
+              width={900}
+              height={300}
               priority
               quality={100}
-              sizes="235px"
+              sizes="(max-width: 379px) 190px, (max-width: 767px) 225px, 340px"
               className="
-                h-auto max-h-[42px] w-full object-contain
+                h-auto max-h-[50px] w-full object-contain object-left
                 drop-shadow-[0_2px_8px_rgba(255,255,255,0.25)]
+                md:max-h-[64px] md:object-center
               "
             />
           </Link>
@@ -529,27 +317,25 @@ export default function CardNav({
             <a
               href={ctaHref}
               className="
-                flex h-12 items-center gap-2 rounded-full px-4
-                text-xs font-black uppercase tracking-[0.14em]
-                transition hover:scale-[1.02]
-                shadow-[0_12px_28px_rgba(3,17,38,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]
+                hidden h-12 items-center gap-2 rounded-full px-4 text-xs
+                font-black uppercase tracking-[0.14em] shadow-[0_12px_28px_rgba(3,17,38,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]
+                transition hover:scale-[1.02] md:flex
               "
               style={{
                 backgroundColor: hexToRgba(buttonBgColor, 0.9),
                 color: buttonTextColor,
               }}
             >
-              <span className="hidden sm:inline">{ctaLabel}</span>
+              <span>{ctaLabel}</span>
               <ArrowUpRight size={16} />
             </a>
           ) : (
             <Link
               href={ctaHref}
               className="
-                flex h-12 items-center gap-2 rounded-full px-4
-                text-xs font-black uppercase tracking-[0.14em]
-                transition hover:scale-[1.02]
-                shadow-[0_12px_28px_rgba(3,17,38,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]
+                hidden h-12 items-center gap-2 rounded-full px-4 text-xs
+                font-black uppercase tracking-[0.14em] shadow-[0_12px_28px_rgba(3,17,38,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]
+                transition hover:scale-[1.02] md:flex
               "
               style={{
                 backgroundColor: hexToRgba(buttonBgColor, 0.9),
@@ -557,7 +343,7 @@ export default function CardNav({
               }}
               onClick={closeNavigation}
             >
-              <span className="hidden sm:inline">{ctaLabel}</span>
+              <span>{ctaLabel}</span>
               <ArrowUpRight size={16} />
             </Link>
           )}
@@ -566,7 +352,122 @@ export default function CardNav({
         <AnimatePresence initial={false}>
           {open && (
             <motion.div
-              key="card-nav-panel"
+              id="mobile-navigation-panel"
+              key="mobile-navigation-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Site navigation"
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{
+                duration: open ? 0.46 : 0.18,
+                delay: open ? 0.14 : 0,
+                ease: resolvedEase,
+              }}
+              className="
+                relative z-10 h-[calc(100dvh-108px)] overflow-y-auto
+                overscroll-contain px-5 pb-8 text-[#24372a] md:hidden
+              "
+            >
+              <div className="mx-auto w-full max-w-xl">
+                <div className="pb-7 pt-6">
+                  <label className="relative block">
+                    <span className="sr-only">Search pages</span>
+                    <input
+                      type="search"
+                      value={searchQuery}
+                      onChange={(event) => setSearchQuery(event.target.value)}
+                      placeholder="Search..."
+                      className="
+                        h-16 w-full rounded-none border border-[#24372a]/15
+                        bg-white/70 px-5 pr-16 text-xl font-normal text-[#24372a]
+                        outline-none transition placeholder:text-[#24372a]/65
+                        focus:border-[#0F5A2D] focus:bg-white
+                      "
+                    />
+                    <Search
+                      size={27}
+                      strokeWidth={1.55}
+                      className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2"
+                    />
+                  </label>
+                </div>
+
+                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#8aae45]">
+                  Explore Redimension
+                </p>
+
+                <nav className="border-t border-[#24372a]/15">
+                  {filteredMobileLinks.map((link, index) => {
+                    const rowClassName = `
+                      group flex min-h-[64px] items-center justify-between gap-5
+                      border-b border-[#24372a]/15 py-3.5
+                      text-[clamp(1.25rem,5.6vw,1.65rem)] font-normal
+                      leading-tight tracking-[-0.025em] text-[#344f39]
+                      transition-colors hover:text-[#0F5A2D]
+                    `;
+
+                    const rowContent = (
+                      <>
+                        <span>{link.label}</span>
+                        <ChevronRight
+                          size={21}
+                          strokeWidth={1.45}
+                          className="shrink-0 text-[#456149] transition-transform duration-300 group-hover:translate-x-1"
+                        />
+                      </>
+                    );
+
+                    return (
+                      <motion.div
+                        key={link.href}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.38,
+                          delay: 0.18 + index * 0.035,
+                          ease: resolvedEase,
+                        }}
+                      >
+                        {isExternalHref(link.href) ? (
+                          <a
+                            href={link.href}
+                            aria-label={link.ariaLabel}
+                            className={rowClassName}
+                            onClick={closeNavigation}
+                          >
+                            {rowContent}
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            aria-label={link.ariaLabel}
+                            className={rowClassName}
+                            onClick={closeNavigation}
+                          >
+                            {rowContent}
+                          </Link>
+                        )}
+                      </motion.div>
+                    );
+                  })}
+
+                  {filteredMobileLinks.length === 0 && (
+                    <p className="border-b border-[#24372a]/15 py-8 text-lg text-[#24372a]/65">
+                      No matching page found.
+                    </p>
+                  )}
+                </nav>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="desktop-navigation-panel"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -574,10 +475,10 @@ export default function CardNav({
               className="relative z-10 hidden overflow-hidden md:block"
             >
               <div
-                    className={`grid gap-3 p-3 pt-0 ${
-                        items.length <= 2 ? "md:grid-cols-2" : "md:grid-cols-3"
-                    }`}
-                >
+                className={`grid gap-3 p-3 pt-0 ${
+                  items.length <= 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+                }`}
+              >
                 {items.map((item, index) => (
                   <motion.section
                     key={item.label}
@@ -589,9 +490,8 @@ export default function CardNav({
                       delay: index * 0.06,
                     }}
                     className="
-                      relative min-h-[165px] overflow-hidden rounded-[1.5rem] p-4
-                      border border-white/20
-                      shadow-[0_18px_45px_rgba(3,17,38,0.14),inset_0_1px_0_rgba(255,255,255,0.22)]
+                      relative min-h-[165px] overflow-hidden rounded-[1.5rem]
+                      border border-white/20 p-4 shadow-[0_18px_45px_rgba(3,17,38,0.14),inset_0_1px_0_rgba(255,255,255,0.22)]
                       backdrop-blur-[22px] backdrop-saturate-150
                     "
                     style={{
@@ -605,58 +505,55 @@ export default function CardNav({
                       <p className="text-xs font-black uppercase tracking-[0.18em] opacity-70">
                         {String(index + 1).padStart(2, "0")}
                       </p>
-
                       <p className="text-sm font-black uppercase tracking-[0.16em]">
                         {item.label}
                       </p>
                     </div>
 
                     <div
-                        className={`relative z-10 grid gap-2 ${
-                            item.links.length > 4 ? "sm:grid-cols-2" : ""
-                        }`}
+                      className={`relative z-10 grid gap-2 ${
+                        item.links.length > 4 ? "sm:grid-cols-2" : ""
+                      }`}
                     >
-                      {item.links.map((link) =>
-                        isExternalHref(link.href) ? (
-                          <a
-                            key={`${item.label}-${link.href}`}
-                            href={link.href}
-                            aria-label={link.ariaLabel}
-                            className="
-                              group flex items-center justify-between rounded-full
-                              border border-white/20 bg-white/10 px-4 py-3
-                              text-sm font-bold transition hover:bg-white/20
-                            "
-                            onClick={closeNavigation}
-                          >
-                            <span>{link.label}</span>
+                      {item.links.map((link) => {
+                        const desktopLinkClassName = `
+                          group flex items-center justify-between rounded-full
+                          border border-white/20 bg-white/10 px-4 py-3
+                          text-sm font-bold transition hover:bg-white/20
+                        `;
 
+                        const desktopLinkContent = (
+                          <>
+                            <span>{link.label}</span>
                             <ArrowUpRight
                               size={15}
                               className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
+                          </>
+                        );
+
+                        return isExternalHref(link.href) ? (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            aria-label={link.ariaLabel}
+                            className={desktopLinkClassName}
+                            onClick={closeNavigation}
+                          >
+                            {desktopLinkContent}
                           </a>
                         ) : (
                           <Link
-                            key={`${item.label}-${link.href}`}
+                            key={link.href}
                             href={link.href}
                             aria-label={link.ariaLabel}
-                            className="
-                              group flex items-center justify-between rounded-full
-                              border border-white/20 bg-white/10 px-4 py-3
-                              text-sm font-bold transition hover:bg-white/20
-                            "
+                            className={desktopLinkClassName}
                             onClick={closeNavigation}
                           >
-                            <span>{link.label}</span>
-
-                            <ArrowUpRight
-                              size={15}
-                              className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                            />
+                            {desktopLinkContent}
                           </Link>
-                        )
-                      )}
+                        );
+                      })}
                     </div>
                   </motion.section>
                 ))}
@@ -664,76 +561,7 @@ export default function CardNav({
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
-
-      <div
-        ref={mobileOverlayRef}
-        className="fixed inset-0 z-[60] md:hidden"
-        aria-hidden={!open}
-      >
-        <svg
-          className="absolute inset-0 h-full w-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path ref={mobilePathRef} fill="#fbfaf5" d={mobileOpenHidden} />
-        </svg>
-
-        <div
-          ref={mobileContentRef}
-          className="relative z-10 invisible h-screen overflow-y-auto px-6 pb-10 pt-32 text-[#031126] opacity-0"
-        >
-          <nav className="border-t border-[#031126]/10">
-            {mobileLinks.map((link) => {
-              const content = (
-                <>
-                  <span>{renderAnimatedLabel(link.label)}</span>
-
-                  <ArrowUpRight
-                    size={27}
-                    strokeWidth={2.4}
-                    className="shrink-0 text-[#C99A2E]"
-                  />
-                </>
-              );
-
-              return isExternalHref(link.href) ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  aria-label={link.ariaLabel}
-                  className="
-                    mobile-menu-row flex items-center justify-between gap-5
-                    border-b border-[#031126]/10 py-3.5
-                    text-[clamp(2.45rem,11vw,4.3rem)]
-                    font-black leading-[0.9] tracking-[-0.075em]
-                    text-[#031126]
-                  "
-                  onClick={closeNavigation}
-                >
-                  {content}
-                </a>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-label={link.ariaLabel}
-                  className="
-                    mobile-menu-row flex items-center justify-between gap-5
-                    border-b border-[#031126]/10 py-3.5
-                    text-[clamp(2.45rem,11vw,4.3rem)]
-                    font-black leading-[0.9] tracking-[-0.075em]
-                    text-[#031126]
-                  "
-                  onClick={closeNavigation}
-                >
-                  {content}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
+      </nav>
     </div>
   );
 }
