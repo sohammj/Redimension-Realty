@@ -4,6 +4,7 @@ import { Navbar } from "@/src/components/layout/Navbar";
 import { Footer } from "@/src/components/layout/Footer";
 import { SvgPageTransition } from "@/src/components/ui/SvgPageTransition";
 import { siteConfig } from "@/src/data/site";
+import StickyGetInTouch from "@/src/components/ui/StickyGetInTouch";
 
 export const metadata: Metadata = {
   title: {
@@ -34,6 +35,7 @@ export default function RootLayout({
         <SvgPageTransition>
           <Navbar />
           {children}
+          <StickyGetInTouch showAfterScroll />
           <Footer />
         </SvgPageTransition>
       </body>

@@ -28,6 +28,7 @@ export type CardSwapProps = {
   onCardClick?: (index: number) => void;
   skewAmount?: number;
   easing?: "linear" | "elastic";
+  direction?: "left" | "right";
   className?: string;
   children: ReactNode;
 };
@@ -43,8 +44,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       {...rest}
       className={`
         absolute left-1/2 top-1/2 overflow-visible
-        [backface-visibility:hidden] [transform-style:preserve-3d]
-        [will-change:transform] ${customClass} ${className}
+        [backface-visibility:hidden]
+        [transform-style:preserve-3d]
+        [will-change:transform]
+        ${customClass}
+        ${className}
       `}
     />
   ),
@@ -66,12 +70,17 @@ const makeSlot = (
   distanceX: number,
   distanceY: number,
   total: number,
-): Slot => ({
-  x: index * distanceX,
-  y: -index * distanceY,
-  z: -index * distanceX * 1.5,
-  zIndex: total - index,
-});
+  direction: "left" | "right",
+): Slot => {
+  const directionMultiplier = direction === "left" ? -1 : 1;
+
+  return {
+    x: index * distanceX * directionMultiplier,
+    y: -index * distanceY,
+    z: -index * Math.abs(distanceX) * 1.5,
+    zIndex: total - index,
+  };
+};
 
 const placeImmediately = (
   element: HTMLElement,
@@ -101,6 +110,7 @@ export default function CardSwap({
   onCardClick,
   skewAmount = 6,
   easing = "elastic",
+  direction = "right",
   className = "",
   children,
 }: CardSwapProps) {
@@ -117,6 +127,7 @@ export default function CardSwap({
   const orderRef = useRef<number[]>(
     Array.from({ length: childArray.length }, (_, index) => index),
   );
+
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const intervalRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -145,14 +156,24 @@ export default function CardSwap({
 
   useEffect(() => {
     const total = refs.length;
-    orderRef.current = Array.from({ length: total }, (_, index) => index);
+
+    orderRef.current = Array.from(
+      { length: total },
+      (_, index) => index,
+    );
 
     refs.forEach((cardRef, index) => {
       if (!cardRef.current) return;
 
       placeImmediately(
         cardRef.current,
-        makeSlot(index, cardDistance, verticalDistance, total),
+        makeSlot(
+          index,
+          cardDistance,
+          verticalDistance,
+          total,
+          direction,
+        ),
         skewAmount,
       );
     });
@@ -183,11 +204,25 @@ export default function CardSwap({
 
       remainingCards.forEach((cardIndex, position) => {
         const element = refs[cardIndex]?.current;
+
         if (!element) return;
 
-        const slot = makeSlot(position, cardDistance, verticalDistance, total);
+        const slot = makeSlot(
+          position,
+          cardDistance,
+          verticalDistance,
+          total,
+          direction,
+        );
 
-        timeline.set(element, { zIndex: slot.zIndex }, "promote");
+        timeline.set(
+          element,
+          {
+            zIndex: slot.zIndex,
+          },
+          "promote",
+        );
+
         timeline.to(
           element,
           {
@@ -206,6 +241,7 @@ export default function CardSwap({
         cardDistance,
         verticalDistance,
         total,
+        direction,
       );
 
       timeline.addLabel(
@@ -214,7 +250,11 @@ export default function CardSwap({
       );
 
       timeline.call(
-        () => gsap.set(frontElement, { zIndex: backSlot.zIndex }),
+        () => {
+          gsap.set(frontElement, {
+            zIndex: backSlot.zIndex,
+          });
+        },
         undefined,
         "return",
       );
@@ -241,7 +281,10 @@ export default function CardSwap({
         window.clearInterval(intervalRef.current);
       }
 
-      intervalRef.current = window.setInterval(swapCards, delay);
+      intervalRef.current = window.setInterval(
+        swapCards,
+        delay,
+      );
     };
 
     const pauseAnimation = () => {
@@ -263,8 +306,15 @@ export default function CardSwap({
     const container = containerRef.current;
 
     if (pauseOnHover && container) {
-      container.addEventListener("mouseenter", pauseAnimation);
-      container.addEventListener("mouseleave", resumeAnimation);
+      container.addEventListener(
+        "mouseenter",
+        pauseAnimation,
+      );
+
+      container.addEventListener(
+        "mouseleave",
+        resumeAnimation,
+      );
     }
 
     return () => {
@@ -275,14 +325,22 @@ export default function CardSwap({
       timelineRef.current?.kill();
 
       if (pauseOnHover && container) {
-        container.removeEventListener("mouseenter", pauseAnimation);
-        container.removeEventListener("mouseleave", resumeAnimation);
+        container.removeEventListener(
+          "mouseenter",
+          pauseAnimation,
+        );
+
+        container.removeEventListener(
+          "mouseleave",
+          resumeAnimation,
+        );
       }
     };
   }, [
     animation,
     cardDistance,
     delay,
+    direction,
     pauseOnHover,
     refs,
     skewAmount,
@@ -290,7 +348,9 @@ export default function CardSwap({
   ]);
 
   const renderedCards = childArray.map((child, index) => {
-    if (!isValidElement<CardProps>(child)) return child;
+    if (!isValidElement<CardProps>(child)) {
+      return child;
+    }
 
     return cloneElement(child, {
       key: child.key ?? index,
@@ -310,8 +370,15 @@ export default function CardSwap({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-visible [perspective:1200px] ${className}`}
-      style={{ width, height }}
+      className={`
+        relative overflow-visible
+        [perspective:1200px]
+        ${className}
+      `}
+      style={{
+        width,
+        height,
+      }}
     >
       <div className="absolute inset-0 [transform-style:preserve-3d]">
         {renderedCards}
