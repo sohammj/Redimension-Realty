@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -11,6 +11,7 @@ import {
   PopoverGroup,
   PopoverPanel,
 } from "@headlessui/react";
+
 import {
   ArrowUpRight,
   Building2,
@@ -147,24 +148,53 @@ const cardNavItems = [
     textColor: "#ffffff",
     links: [
       {
-        label: "Home",
-        href: "/",
-        ariaLabel: "Go to home page",
-      },
-      {
         label: "About",
         href: "/about-us",
         ariaLabel: "Learn about Redimension Realty",
       },
       {
-        label: "Projects",
-        href: "/projects",
-        ariaLabel: "View projects",
-      },
-      {
         label: "Services",
         href: "/services",
-        ariaLabel: "View services",
+        ariaLabel: "View all services",
+        children: [
+          {
+            label: "Environmental & Regulatory",
+            href: "/services#environmental-regulatory",
+            ariaLabel: "View environmental and regulatory services",
+          },
+          {
+            label: "Redevelopment & SRA",
+            href: "/services#redevelopment-sra",
+            ariaLabel: "View redevelopment and SRA services",
+          },
+          {
+            label: "Public Infrastructure",
+            href: "/services#public-infrastructure",
+            ariaLabel: "View public infrastructure services",
+          },
+        ],
+      },
+      {
+        label: "Projects",
+        href: "/projects",
+        ariaLabel: "View all projects",
+        children: [
+          {
+            label: "Environmental Projects",
+            href: "/projects#environmental",
+            ariaLabel: "View environmental projects",
+          },
+          {
+            label: "Redevelopment Projects",
+            href: "/projects#redevelopment",
+            ariaLabel: "View redevelopment projects",
+          },
+          {
+            label: "Infrastructure Projects",
+            href: "/projects#infrastructure",
+            ariaLabel: "View infrastructure projects",
+          },
+        ],
       },
     ],
   },
@@ -176,12 +206,34 @@ const cardNavItems = [
       {
         label: "Sectors",
         href: "/sectors-we-serve",
-        ariaLabel: "View sectors served",
+        ariaLabel: "View all sectors served",
+        children: [
+          {
+            label: "Real Estate & Developers",
+            href: "/sectors-we-serve#real-estate",
+            ariaLabel: "View real estate and developer sectors",
+          },
+          {
+            label: "Government & Infrastructure",
+            href: "/sectors-we-serve#government-infrastructure",
+            ariaLabel: "View government and infrastructure sectors",
+          },
+          {
+            label: "Coastal & Environmental",
+            href: "/sectors-we-serve#coastal-environmental",
+            ariaLabel: "View coastal and environmental sectors",
+          },
+        ],
       },
       {
         label: "Clients",
         href: "/clients",
         ariaLabel: "View clients",
+      },
+      {
+        label: "Insights",
+        href: "/blog",
+        ariaLabel: "Read insights",
       },
       {
         label: "Careers",
@@ -192,11 +244,6 @@ const cardNavItems = [
         label: "Gallery",
         href: "/gallery",
         ariaLabel: "View gallery",
-      },
-      {
-        label: "Blog",
-        href: "/blog",
-        ariaLabel: "Read blog insights",
       },
     ],
   },
@@ -219,41 +266,51 @@ function DesktopDropdown({
 }) {
   const isActive = isRouteActive(pathname, item.href);
 
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const closeTimerRef =
+    useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelScheduledClose = () => {
+    if (!closeTimerRef.current) return;
+
+    clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = null;
+  };
+
+  useEffect(() => {
+    return () => {
+      cancelScheduledClose();
+    };
+  }, []);
+
   return (
     <Popover className="relative">
       {({ open, close }) => {
-        let closeTimer: ReturnType<typeof setTimeout>;
-
-        const openPopover = (
-          event: React.MouseEvent<HTMLDivElement>,
-        ) => {
-          clearTimeout(closeTimer);
+        const openDropdown = () => {
+          cancelScheduledClose();
 
           if (!open) {
-            const button = event.currentTarget.querySelector(
-              "[data-popover-button]",
-            ) as HTMLButtonElement | null;
-
-            button?.click();
+            buttonRef.current?.click();
           }
         };
 
-        const closePopover = () => {
-          clearTimeout(closeTimer);
+        const scheduleDropdownClose = () => {
+          cancelScheduledClose();
 
-          closeTimer = setTimeout(() => {
-            if (open) close();
-          }, 140);
+          closeTimerRef.current = setTimeout(() => {
+            close();
+            closeTimerRef.current = null;
+          }, 240);
         };
 
         return (
           <div
             className="relative"
-            onMouseEnter={openPopover}
-            onMouseLeave={closePopover}
+            onMouseEnter={openDropdown}
+            onMouseLeave={scheduleDropdownClose}
           >
             <PopoverButton
-              data-popover-button
+              ref={buttonRef}
               className={`
                 group relative flex items-center gap-1.5 py-2
                 text-[14px] font-medium tracking-[-0.01em]
@@ -294,13 +351,9 @@ function DesktopDropdown({
             <PopoverPanel
               transition
               className="
-                absolute left-1/2 top-[calc(100%+14px)] z-[100]
+                absolute left-1/2 top-full z-[100]
                 w-[430px] -translate-x-1/2
-                origin-top rounded-[22px]
-                border border-white/60
-                bg-[#f7f5ee]/95 p-2.5
-                shadow-[0_24px_70px_rgba(3,17,38,0.16)]
-                backdrop-blur-2xl
+                origin-top pt-4
 
                 transition duration-200 ease-out
 
@@ -308,92 +361,105 @@ function DesktopDropdown({
                 data-closed:scale-[0.97]
                 data-closed:opacity-0
               "
-              onMouseEnter={() => clearTimeout(closeTimer)}
-              onMouseLeave={closePopover}
             >
-              {/* Invisible hover bridge */}
-              <div className="absolute -top-4 left-0 h-4 w-full" />
+              <div
+                className="
+                  overflow-hidden rounded-[22px]
+                  border border-white/60
+                  bg-[#f7f5ee]/95 p-2.5
+                  shadow-[0_24px_70px_rgba(3,17,38,0.16)]
+                  backdrop-blur-2xl
+                "
+              >
+                <div className="space-y-1">
+                  {item.dropdown?.map((dropdownLink) => {
+                    const Icon = dropdownLink.icon;
 
-              <div className="space-y-1">
-                {item.dropdown?.map((dropdownLink) => {
-                  const Icon = dropdownLink.icon;
-
-                  return (
-                    <Link
-                      key={dropdownLink.href}
-                      href={dropdownLink.href}
-                      onClick={() => close()}
-                      className="
-                        group flex items-start gap-4 rounded-[16px]
-                        px-4 py-3.5
-                        transition-colors duration-300
-                        hover:bg-white/80
-                      "
-                    >
-                      <span
+                    return (
+                      <Link
+                        key={dropdownLink.href}
+                        href={dropdownLink.href}
+                        onClick={() => close()}
                         className="
-                          mt-0.5 flex h-10 w-10 shrink-0
-                          items-center justify-center rounded-full
-                          border border-[#0f5a2d]/10
-                          bg-[#0f5a2d]/[0.07]
-                          text-[#0f5a2d]
-                          transition duration-300
-                          group-hover:bg-[#0f5a2d]
-                          group-hover:text-white
+                          group flex items-start gap-4
+                          rounded-[16px] px-4 py-3.5
+                          transition-colors duration-300
+                          hover:bg-white/80
                         "
                       >
-                        <Icon size={18} strokeWidth={1.7} />
-                      </span>
-
-                      <span className="min-w-0 flex-1">
                         <span
                           className="
-                            flex items-center justify-between gap-4
-                            text-[14px] font-semibold text-[#10251a]
+                            mt-0.5 flex h-10 w-10 shrink-0
+                            items-center justify-center rounded-full
+                            border border-[#0f5a2d]/10
+                            bg-[#0f5a2d]/[0.07]
+                            text-[#0f5a2d]
+                            transition duration-300
+
+                            group-hover:bg-[#0f5a2d]
+                            group-hover:text-white
                           "
                         >
-                          {dropdownLink.label}
+                          <Icon size={18} strokeWidth={1.7} />
+                        </span>
 
-                          <ArrowUpRight
-                            size={15}
+                        <span className="min-w-0 flex-1">
+                          <span
                             className="
-                              shrink-0 text-[#0f5a2d]
-                              transition-transform duration-300
-                              group-hover:-translate-y-0.5
-                              group-hover:translate-x-0.5
+                              flex items-center justify-between gap-4
+                              text-[14px] font-semibold text-[#10251a]
                             "
-                          />
-                        </span>
+                          >
+                            {dropdownLink.label}
 
-                        <span
-                          className="
-                            mt-1 block text-[12px]
-                            leading-[1.55] text-[#536159]
-                          "
-                        >
-                          {dropdownLink.description}
-                        </span>
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
+                            <ArrowUpRight
+                              size={15}
+                              className="
+                                shrink-0 text-[#0f5a2d]
+                                transition-transform duration-300
 
-              <div className="mt-2 border-t border-[#0f5a2d]/10 px-2 pt-2">
-                <Link
-                  href={item.href}
-                  onClick={() => close()}
+                                group-hover:-translate-y-0.5
+                                group-hover:translate-x-0.5
+                              "
+                            />
+                          </span>
+
+                          <span
+                            className="
+                              mt-1 block text-[12px]
+                              leading-[1.55] text-[#536159]
+                            "
+                          >
+                            {dropdownLink.description}
+                          </span>
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <div
                   className="
-                    flex items-center justify-between
-                    rounded-[14px] px-3 py-3
-                    text-[12px] font-bold uppercase
-                    tracking-[0.14em] text-[#0f5a2d]
-                    transition hover:bg-[#0f5a2d]/[0.06]
+                    mt-2 border-t border-[#0f5a2d]/10
+                    px-2 pt-2
                   "
                 >
-                  View all {item.label}
-                  <ArrowUpRight size={15} />
-                </Link>
+                  <Link
+                    href={item.href}
+                    onClick={() => close()}
+                    className="
+                      flex items-center justify-between
+                      rounded-[14px] px-3 py-3
+                      text-[12px] font-bold uppercase
+                      tracking-[0.14em] text-[#0f5a2d]
+                      transition hover:bg-[#0f5a2d]/[0.06]
+                    "
+                  >
+                    View all {item.label}
+
+                    <ArrowUpRight size={15} />
+                  </Link>
+                </div>
               </div>
             </PopoverPanel>
           </div>
@@ -402,6 +468,7 @@ function DesktopDropdown({
     </Popover>
   );
 }
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -424,7 +491,7 @@ export function Navbar() {
 
   return (
     <>
-      {/* Mobile and tablet CardNav */}
+      {/* Mobile and tablet navigation */}
       <header className="fixed inset-x-0 top-4 z-50 px-4 lg:hidden">
         <CardNav
           logo="/logo/redimension-logo.png"
@@ -439,7 +506,7 @@ export function Navbar() {
         />
       </header>
 
-      {/* Laptop and desktop navbar */}
+      {/* Laptop and desktop navigation */}
       <header
         className={`
           fixed inset-x-0 top-0 z-50 hidden
@@ -478,15 +545,17 @@ export function Navbar() {
               priority
               quality={100}
               className="
-                h-[66px] w-[66px] object-contain
-                xl:h-[72px] xl:w-[72px]
+                h-[74px] w-[74px] object-contain
+                drop-shadow-[0_2px_8px_rgba(3,17,38,0.08)]
+
+                xl:h-[80px] xl:w-[80px]
               "
             />
           </Link>
 
           <PopoverGroup className="flex items-center gap-7 xl:gap-9">
             {desktopLinks.map((item) => {
-              if (item.dropdown) {
+              if (item.dropdown?.length) {
                 return (
                   <DesktopDropdown
                     key={item.href}
@@ -496,7 +565,10 @@ export function Navbar() {
                 );
               }
 
-              const isActive = isRouteActive(pathname, item.href);
+              const isActive = isRouteActive(
+                pathname,
+                item.href,
+              );
 
               return (
                 <Link
