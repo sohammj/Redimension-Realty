@@ -130,12 +130,12 @@ export default function FeaturedProjectsSection({
         {/* Header */}
         <div className="grid gap-7 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#d8b64c] sm:text-[11px]">
+            {/* <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#d8b64c] sm:text-[11px]">
               Selected Work
-            </p>
+            </p> */}
 
             <h2 className="mt-4 max-w-[600px] font-[var(--font-cormorant)] text-[clamp(2.8rem,4.8vw,4.9rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-[#f7f3e9]">
-              Featured projects.
+              Featured projects
             </h2>
           </div>
 

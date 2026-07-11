@@ -19,6 +19,8 @@ import CoreServicesSection from "@/src/components/sections/CoreServicesSection";
 import WhyChooseUsSection from "@/src/components/sections/WhyChooseUsSection";
 import TrustedBySection from "@/src/components/sections/TrustedBySection";
 import FeaturedProjectsSection from "@/src/components/sections/FeaturedProjectsSection";
+import { ContactSection } from "@/src/components/sections/ContactSection";
+
 import {
   featuredProjects,
 } from "@/src/data/site";
@@ -153,6 +155,7 @@ export default function Home() {
       <WhyChooseUsSection />
       <TrustedBySection clients={clientLogos} />
       <FeaturedProjectsSection projects={featuredProjects} />
+      <ContactSection />
     </main>
   );
 }

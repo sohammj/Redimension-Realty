@@ -66,9 +66,9 @@ export default function WhyChooseUsSection() {
       <div className="relative mx-auto w-full max-w-[1180px] px-5 sm:px-8 lg:px-10">
         {/* Heading */}
         <div className="mx-auto max-w-[860px] text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#b3821e] sm:text-[11px]">
+          {/* <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#b3821e] sm:text-[11px]">
             Why Choose Us
-          </p>
+          </p> */}
 
           <h2 className="mt-4 font-[var(--font-cormorant)] text-[clamp(2.7rem,5vw,5rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-[#031126]">
             The expertise to navigate complexity.
