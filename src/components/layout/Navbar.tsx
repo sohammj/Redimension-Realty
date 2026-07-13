@@ -18,6 +18,8 @@ import {
   ChevronDown,
   Landmark,
   Leaf,
+  Target,
+  UserRound,
   Waves,
   type LucideIcon,
 } from "lucide-react";
@@ -39,13 +41,33 @@ type DesktopLink = {
 
 const desktopLinks: DesktopLink[] = [
   {
-    href: "/",
-    label: "Home",
-  },
-  {
     href: "/about-us",
     label: "About",
+    dropdown: [
+      {
+        label: "Overview",
+        href: "/about-us#overview",
+        description:
+          "An introduction to Redimension Realty and its advisory approach.",
+        icon: Building2,
+      },
+      {
+        label: "Vision, Mission & Values",
+        href: "/about-us#vision-mission-values",
+        description:
+          "The direction and principles guiding every engagement.",
+        icon: Target,
+      },
+      {
+        label: "Leadership",
+        href: "/about-us#leadership",
+        description:
+          "The experience and professional direction behind the company.",
+        icon: UserRound,
+      },
+    ],
   },
+
   {
     href: "/services",
     label: "Services",
@@ -114,8 +136,7 @@ const desktopLinks: DesktopLink[] = [
       {
         label: "Government & Infrastructure",
         href: "/sectors-we-serve#government-infrastructure",
-        description:
-          "Coordination with civic bodies and public institutions.",
+        description: "Coordination with civic bodies and public institutions.",
         icon: Landmark,
       },
       {
@@ -151,6 +172,33 @@ const cardNavItems = [
         label: "About",
         href: "/about-us",
         ariaLabel: "Learn about Redimension Realty",
+        children: [
+          {
+            label: "Overview",
+            href: "/about-us#overview",
+            ariaLabel: "View the Redimension Realty overview",
+          },
+          {
+            label: "Company Story",
+            href: "/about-us#company-story",
+            ariaLabel: "Read the Redimension Realty company story",
+          },
+          {
+            label: "Vision, Mission & Values",
+            href: "/about-us#vision-mission-values",
+            ariaLabel: "View the company vision, mission and values",
+          },
+          {
+            label: "Our Strengths",
+            href: "/about-us#strengths",
+            ariaLabel: "View Redimension Realty strengths",
+          },
+          {
+            label: "Leadership",
+            href: "/about-us#leadership",
+            ariaLabel: "View Redimension Realty leadership",
+          },
+        ],
       },
       {
         label: "Services",
@@ -267,8 +315,7 @@ function DesktopDropdown({
   const isActive = isRouteActive(pathname, item.href);
 
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const closeTimerRef =
-    useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const cancelScheduledClose = () => {
     if (!closeTimerRef.current) return;
@@ -456,7 +503,6 @@ function DesktopDropdown({
                     "
                   >
                     View all {item.label}
-
                     <ArrowUpRight size={15} />
                   </Link>
                 </div>
@@ -565,10 +611,7 @@ export function Navbar() {
                 );
               }
 
-              const isActive = isRouteActive(
-                pathname,
-                item.href,
-              );
+              const isActive = isRouteActive(pathname, item.href);
 
               return (
                 <Link

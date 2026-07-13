@@ -1,84 +1,377 @@
-import { Landmark, Leaf, ShieldCheck, Target } from "lucide-react";
-import { values } from "@/src/data/site";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
-  title: "About Us",
+  title: "About Redimension Realty",
   description:
-    "Learn about Redimension Realty Private Limited, a Mumbai-based environmental, forest and coastal regulatory consulting company.",
+    "Learn about Redimension Realty Private Limited, a Mumbai-based environmental, forest, coastal regulatory, redevelopment and infrastructure advisory company.",
 };
+
+const companyValues = [
+  {
+    number: "01",
+    title: "Integrity",
+    description:
+      "Transparent advice grounded in statutory requirements, professional responsibility and sound judgement.",
+  },
+  {
+    number: "02",
+    title: "Precision",
+    description:
+      "Careful analysis, accurate documentation and close attention to every regulatory and project requirement.",
+  },
+  {
+    number: "03",
+    title: "Accountability",
+    description:
+      "Clear ownership of commitments, communication and the outcomes entrusted to our team.",
+  },
+  {
+    number: "04",
+    title: "Responsible Development",
+    description:
+      "Supporting growth while respecting environmental, institutional and social considerations.",
+  },
+];
+
+const leadershipExperience = [
+  "Real estate development",
+  "Environmental and forest approvals",
+  "Coastal regulatory consulting",
+  "Institutional and stakeholder coordination",
+];
 
 export default function AboutUsPage() {
   return (
-    <main className="pt-28">
-      <section className="section-padding">
-        <div className="container-shell">
-          <p className="eyebrow">About Us</p>
-          <h1 className="section-title mt-4 max-w-5xl">
-            A Mumbai-based advisory firm operating at the intersection of regulation, sustainability and development.
-          </h1>
-          <p className="section-subtitle mt-7 max-w-4xl">
-            Redimension Realty Private Limited provides strategic environmental, coastal and
-            infrastructure-related compliance solutions across India. The company supports complex
-            and high-value developments through regulatory strategy, statutory compliance management,
-            technical documentation, institutional coordination and execution support.
-          </p>
+    <main className="overflow-hidden bg-[#f7f5ee] pt-[108px] text-[#031126] lg:pt-[88px]">
+      {/* Overview and company purpose */}
+      <section
+        id="overview"
+        className="relative scroll-mt-32 overflow-hidden border-b border-[#031126]/10 bg-[#f7f5ee]"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-24 top-36 hidden h-52 w-52 rotate-45 border-[38px] border-[#173426]/[0.035] lg:block"
+        />
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            <div className="premium-card rounded-[2rem] p-7 lg:col-span-2">
-              <h2 className="text-3xl font-black tracking-[-0.05em]">Company Story</h2>
-              <p className="mt-5 leading-8 text-[#526174]">
-                The firm works with real estate developers, infrastructure project proponents,
-                hospitality groups, industrial developments, ports, coastal assets and urban
-                redevelopment initiatives. Its role is to help stakeholders navigate India’s
-                evolving approval frameworks through a structured, compliance-driven and
-                execution-oriented approach.
-              </p>
-              <p className="mt-5 leading-8 text-[#526174]">
-                Redimension Realty combines technical proficiency, regulatory intelligence and
-                stakeholder management capabilities to mitigate compliance risks and facilitate
-                smoother project execution.
-              </p>
-            </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-2 top-[440px] hidden h-14 w-44 bg-[#173426]/[0.035] lg:block"
+        />
 
-            <div className="rounded-[2rem] bg-[#031126] p-7 text-white">
-              <Landmark className="text-[#c99a2e]" />
-              <h2 className="mt-5 text-2xl font-black tracking-[-0.04em]">Leadership</h2>
-              <p className="mt-4 leading-7 text-white/65">
-                Led by Mr. Tejas Ajgaonkar, Director, with over 18 years of experience in real
-                estate development and environmental, forest and coastal regulatory consulting.
+        <div className="container-shell px-5 pb-20 pt-14 sm:px-7 sm:pb-24 sm:pt-16 lg:px-10 lg:pb-28 lg:pt-20">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            {/* Editorial copy */}
+            <div className="relative z-10 lg:col-span-6">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#9b7426]">
+                About Redimension Realty
               </p>
-            </div>
-          </div>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <div className="glass-card rounded-[2rem] p-7">
-              <Target className="text-[#0f5a2d]" />
-              <h3 className="mt-5 text-2xl font-black tracking-[-0.04em]">Mission</h3>
-              <p className="mt-4 leading-7 text-[#526174]">
-                To deliver precise, compliant and timely regulatory solutions to developers,
-                project proponents and government bodies while supporting responsible and
-                sustainable development outcomes.
-              </p>
-            </div>
+              <h1 className="mt-6 max-w-[610px] font-[var(--font-cormorant)] text-[clamp(3.15rem,4.9vw,5.35rem)] font-medium leading-[0.94] tracking-[-0.05em] text-[#173426]">
+                Bringing clarity to regulation, coordination and execution.
+              </h1>
 
-            <div className="glass-card rounded-[2rem] p-7">
-              <Leaf className="text-[#0f5a2d]" />
-              <h3 className="mt-5 text-2xl font-black tracking-[-0.04em]">Vision</h3>
-              <p className="mt-4 leading-7 text-[#526174]">
-                To be recognised as a trusted end-to-end environmental regulatory advisory and
-                responsible development partner enabling growth in harmony with environmental sustainability.
-              </p>
-            </div>
-          </div>
+              <div
+                id="company-story"
+                className="mt-9 max-w-[620px] scroll-mt-32 space-y-6 text-[16px] leading-[1.82] text-[#435066]"
+              >
+                <p>
+                  Redimension Realty Private Limited is a Mumbai-based
+                  environmental, regulatory and development advisory firm
+                  supporting complex real estate, infrastructure and
+                  institutional projects across India.
+                </p>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {values.map((value) => (
-              <div key={value.title} className="rounded-[2rem] border border-[#071b3a]/10 bg-white p-6">
-                <ShieldCheck className="text-[#0f5a2d]" />
-                <h3 className="mt-5 text-xl font-black tracking-[-0.04em]">{value.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[#526174]">{value.description}</p>
+                <p>
+                  We combine specialist regulatory understanding with practical
+                  knowledge of project delivery. Our role is to help clients
+                  navigate approvals, coordinate stakeholders and address
+                  compliance requirements with greater clarity and confidence.
+                </p>
+
+                <p>
+                  The company works with developers, infrastructure project
+                  proponents, institutions, hospitality groups, industrial
+                  developments, coastal assets and urban redevelopment
+                  initiatives.
+                </p>
               </div>
-            ))}
+
+              <div className="mt-10 max-w-[590px] border-l-2 border-[#c99a2e] pl-6">
+                <p className="font-[var(--font-cormorant)] text-[1.35rem] leading-[1.4] tracking-[-0.015em] text-[#173426] sm:text-[1.6rem]">
+                  Development moves forward when regulatory requirements become
+                  clear, coordinated and actionable.
+                </p>
+              </div>
+            </div>
+
+            {/* Editorial image */}
+            <div className="lg:col-span-6 lg:pt-10">
+              <div
+                className="relative ml-auto aspect-[4/5] w-full max-w-[540px] overflow-hidden"
+                style={{
+                  clipPath:
+                    "polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 10%)",
+                }}
+              >
+                <Image
+                  src="/images/about/about-hero.jpg"
+                  alt="Environmental and development advisory"
+                  fill
+                  priority
+                  sizes="(max-width: 1023px) 100vw, 42vw"
+                  className="object-cover object-center"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#031126]/15 via-transparent to-transparent" />
+              </div>
+
+              <div className="ml-auto flex max-w-[540px] items-start justify-between gap-6 border-b border-[#031126]/15 py-4">
+                <p className="max-w-[370px] text-[10px] font-bold uppercase leading-5 tracking-[0.18em] text-[#9b7426]">
+                  Environmental, regulatory and development advisory
+                </p>
+
+                <span className="text-[10px] font-medium tracking-[0.12em] text-[#173426]/45">
+                  01
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Company facts */}
+          <div className="mt-16 grid border-l border-t border-[#031126]/15 sm:grid-cols-3 lg:mt-24">
+            <div className="border-b border-r border-[#031126]/15 px-5 py-7 sm:px-7">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
+                Headquartered
+              </p>
+
+              <p className="mt-3 font-[var(--font-cormorant)] text-2xl text-[#173426]">
+                Mumbai, Maharashtra
+              </p>
+            </div>
+
+            <div className="border-b border-r border-[#031126]/15 px-5 py-7 sm:px-7">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
+                Project Reach
+              </p>
+
+              <p className="mt-3 font-[var(--font-cormorant)] text-2xl text-[#173426]">
+                Advisory across India
+              </p>
+            </div>
+
+            <div className="border-b border-r border-[#031126]/15 px-5 py-7 sm:px-7">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
+                Leadership
+              </p>
+
+              <p className="mt-3 font-[var(--font-cormorant)] text-2xl text-[#173426]">
+                18+ years of experience
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission, vision and values */}
+      <section
+        id="vision-mission-values"
+        className="scroll-mt-32 bg-[#fbfaf6] py-20 sm:py-24 lg:py-32"
+      >
+        <div className="container-shell px-5 sm:px-7 lg:px-10">
+          <div className="grid gap-12 border-b border-[#031126]/15 pb-16 lg:grid-cols-12 lg:gap-16 lg:pb-24">
+            <div className="lg:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#9b7426]">
+                Our Direction
+              </p>
+
+              <h2 className="mt-5 max-w-[600px] font-[var(--font-cormorant)] text-[clamp(2.4rem,3.75vw,4.35rem)] leading-[0.97] tracking-[-0.055em] text-[#031126]">
+                Purpose shaped by responsibility.
+              </h2>
+            </div>
+
+            <div className="grid gap-12 sm:grid-cols-2 sm:gap-10 lg:col-span-7">
+              <article>
+                <p className="border-b border-[#031126]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
+                  01 — Mission
+                </p>
+
+                <h3 className="mt-7 font-[var(--font-cormorant)] text-[2.4rem] font-medium leading-[1] tracking-[-0.035em] text-[#173426]">
+                  Deliver clarity and confidence.
+                </h3>
+
+                <p className="mt-6 text-[15px] leading-[1.8] text-[#4c596d]">
+                  To provide precise, timely and commercially practical
+                  regulatory solutions that help developers, institutions and
+                  project proponents progress with greater certainty.
+                </p>
+              </article>
+
+              <article>
+                <p className="border-b border-[#031126]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
+                  02 — Vision
+                </p>
+
+                <h3 className="mt-7 font-[var(--font-cormorant)] text-[2.4rem] font-medium leading-[1] tracking-[-0.035em] text-[#173426]">
+                  Enable responsible growth.
+                </h3>
+
+                <p className="mt-6 text-[15px] leading-[1.8] text-[#4c596d]">
+                  To be recognised as a trusted multidisciplinary advisory
+                  partner for environmentally responsible development and
+                  complex infrastructure projects across India.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <div className="pt-16 lg:pt-24">
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-5">
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#9b7426]">
+                  Our Values
+                </p>
+
+                <h2 className="mt-5 max-w-[600px] font-[var(--font-cormorant)] text-[clamp(2.4rem,3.75vw,4.35rem)] leading-[0.97] tracking-[-0.055em] text-[#031126]">
+                  The principles behind every engagement.
+                </h2>
+
+                <p className="mt-7 max-w-md text-[15px] leading-8 text-[#5b6677]">
+                  Our approach is defined by professional judgement, clear
+                  responsibility and a consistent focus on practical project
+                  outcomes.
+                </p>
+              </div>
+
+              <div className="border-t border-[#031126]/15 lg:col-span-7">
+                {companyValues.map((value) => (
+                  <article
+                    key={value.title}
+                    className="grid gap-5 border-b border-[#031126]/15 py-7 sm:grid-cols-[60px_180px_1fr] sm:items-start sm:gap-6"
+                  >
+                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#9b7426]">
+                      {value.number}
+                    </p>
+
+                    <h3 className="font-[var(--font-cormorant)] text-3xl font-medium leading-none tracking-[-0.025em] text-[#173426]">
+                      {value.title}
+                    </h3>
+
+                    <p className="text-sm leading-7 text-[#596679]">
+                      {value.description}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership */}
+      <section
+        id="leadership"
+        className="scroll-mt-32 bg-[#f7f5ee] py-20 sm:py-24 lg:py-32"
+      >
+        <div className="container-shell px-5 sm:px-7 lg:px-10">
+          <div className="border-b border-[#031126]/15 pb-5">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#9b7426]">
+              Leadership
+            </p>
+          </div>
+
+          <div className="grid gap-12 pt-12 lg:grid-cols-12 lg:gap-16 lg:pt-16">
+            <div className="lg:col-span-5">
+              <div className="relative aspect-[4/5] w-full max-w-[530px] overflow-hidden bg-[#e8e4da]">
+                <Image
+                  src="/images/leadership/tejas-ajgaonkar.jpg"
+                  alt="Tejas Ajgaonkar, Director of Redimension Realty"
+                  fill
+                  sizes="(max-width: 1023px) 100vw, 40vw"
+                  className="object-cover object-top"
+                />
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 lg:col-start-7">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
+                Director
+              </p>
+
+              <h2 className="mt-5 font-[var(--font-cormorant)] text-[clamp(3.5rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.05em] text-[#173426]">
+                Tejas Ajgaonkar
+              </h2>
+
+              <div className="mt-9 space-y-6 text-[16px] leading-[1.85] text-[#4c596d]">
+                <p>
+                  Redimension Realty is led by Mr. Tejas Ajgaonkar, who brings
+                  more than 18 years of experience across real estate
+                  development and environmental, forest and coastal regulatory
+                  consulting.
+                </p>
+
+                <p>
+                  His experience combines an understanding of development
+                  priorities with practical knowledge of statutory processes,
+                  institutional coordination and project execution.
+                </p>
+              </div>
+
+              <div className="mt-10 border-y border-[#031126]/15 py-6">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9b7426]">
+                  Over 18 years of professional and industry experience
+                </p>
+              </div>
+
+              <div className="border-t border-[#031126]/15">
+                {leadershipExperience.map((item, index) => (
+                  <div
+                    key={item}
+                    className="grid grid-cols-[45px_1fr] border-b border-[#031126]/15 py-5"
+                  >
+                    <span className="text-[10px] font-bold tracking-[0.15em] text-[#9b7426]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    <p className="text-sm font-medium leading-6 text-[#26372d]">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Closing CTA */}
+      <section className="bg-[#f7f5ee] px-5 py-20 sm:px-7 sm:py-24 lg:px-10 lg:py-28">
+        <div className="container-shell">
+          <div className="flex flex-col gap-8 rounded-[2rem] bg-[#f1e6b8] px-7 py-9 sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
+            <div className="max-w-2xl">
+              <p className="font-[var(--font-cormorant)] text-[clamp(1.8rem,2.5vw,2.5rem)] leading-[1.05] tracking-[-0.025em] text-[#173426]">
+                Have a project that requires regulatory clarity?
+              </p>
+
+              <p className="mt-3 max-w-xl text-[14px] leading-7 text-[#536159] sm:text-[15px]">
+                Speak with our team about environmental, regulatory and
+                development requirements for your project.
+              </p>
+            </div>
+
+            <Link
+              href="/contact-us"
+              className="group inline-flex min-h-[52px] w-full shrink-0 items-center justify-center gap-3 rounded-full bg-[#173426] px-7 text-[12px] font-semibold tracking-[0.04em] text-white transition duration-300 hover:bg-[#0f5a2d] sm:w-auto"
+            >
+              <span>Start a conversation</span>
+
+              <span
+                aria-hidden="true"
+                className="text-base transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </Link>
           </div>
         </div>
       </section>
