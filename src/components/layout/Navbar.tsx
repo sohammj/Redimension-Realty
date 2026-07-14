@@ -157,6 +157,10 @@ const desktopLinks: DesktopLink[] = [
     label: "Insights",
   },
   {
+    href: "/gallery",
+    label: "Gallery",
+  },
+  {
     href: "/contact-us",
     label: "Contact",
   },
@@ -282,6 +286,11 @@ const cardNavItems = [
         label: "Insights",
         href: "/blog",
         ariaLabel: "Read insights",
+      },
+      {
+        label: "Gallery",
+        href: "/gallery",
+        ariaLabel: "View gallery",
       },
       {
         label: "Careers",
