@@ -12,9 +12,9 @@ export default function BlogPage() {
       <section className="section-padding">
         <div className="container-shell">
           <p className="eyebrow">Blog / Insights</p>
-          <h1 className="section-title mt-4 max-w-5xl">
+          {/* <h1 className="section-title mt-4 max-w-5xl">
             Regulatory insights for sustainable development.
-          </h1>
+          </h1> */}
           <p className="section-subtitle mt-7 max-w-4xl">
             Articles can later be managed through Sanity CMS for SEO-focused publishing around
             EC, CRZ, forest clearance, environmental due diligence and sustainability topics.

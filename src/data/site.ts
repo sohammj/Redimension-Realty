@@ -44,24 +44,6 @@ export const coreServices = [
     summary:
       "Coastal Regulation Zone approvals, NOCs, coastal compliance strategy and liaisoning with CZMA and relevant statutory authorities.",
   },
-  {
-    title: "Regulatory Strategy & Risk Assessment",
-    slug: "regulatory-strategy-risk-assessment",
-    summary:
-      "Pre-project advisory, regulatory risk mapping, feasibility review and pathway planning for complex approval environments.",
-  },
-  {
-    title: "Statutory Documentation & Liaisoning",
-    slug: "statutory-documentation-liaisoning",
-    summary:
-      "Technical documentation, filing, authority coordination and approval follow-ups with environmental, coastal and planning bodies.",
-  },
-  {
-    title: "ESG & Sustainability Advisory",
-    slug: "esg-sustainability-advisory",
-    summary:
-      "Sustainable development advisory aligned with statutory frameworks, environmental governance and responsible project execution.",
-  },
 ];
 
 export const businessSegments = [

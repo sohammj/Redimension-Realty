@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "About Redimension Realty",
+  title: "About Redimension Realty | Environmental Advisory Mumbai",
   description:
-    "Learn about Redimension Realty Private Limited, a Mumbai-based environmental, forest, coastal regulatory, redevelopment and infrastructure advisory company.",
+    "Learn about Redimension Realty’s environmental, forest, coastal and infrastructure regulatory advisory practice, approach and leadership in Mumbai.",
 };
 
 const companyValues = [
@@ -12,33 +12,67 @@ const companyValues = [
     number: "01",
     title: "Integrity",
     description:
-      "Transparent advice grounded in statutory requirements, professional responsibility and sound judgement.",
+      "Candid, confidential advice grounded in statutory requirements, professional responsibility and sound judgement.",
   },
   {
     number: "02",
     title: "Precision",
     description:
-      "Careful analysis, accurate documentation and close attention to every regulatory and project requirement.",
+      "Careful analysis, disciplined documentation and close attention to every regulatory dependency and project requirement.",
   },
   {
     number: "03",
     title: "Accountability",
     description:
-      "Clear ownership of commitments, communication and the outcomes entrusted to our team.",
+      "Clear ownership of responsibilities, communication and the work entrusted to our team throughout an engagement.",
   },
   {
     number: "04",
     title: "Responsible Development",
     description:
-      "Supporting growth while respecting environmental, institutional and social considerations.",
+      "Enabling growth that respects environmental safeguards, institutional processes and the communities projects serve.",
   },
 ];
 
 const leadershipExperience = [
-  "Real estate development",
-  "Environmental and forest approvals",
-  "Coastal regulatory consulting",
-  "Institutional and stakeholder coordination",
+  "Environmental and forest regulatory advisory",
+  "CRZ and coastal regulatory consulting",
+  "Real estate and infrastructure development",
+  "Authority and multidisciplinary stakeholder coordination",
+];
+
+const selectedClients = [
+  "Godrej Properties",
+  "K Raheja Corp",
+  "Mahindra Holidays & Resorts India",
+  "Shapoorji Pallonji Group",
+  "Afcons Infrastructure",
+  "Dalmia Cement",
+  "Puravankara",
+  "Embassy Developments",
+];
+
+const institutionalAssociations = [
+  {
+    name: "Brihanmumbai Municipal Corporation",
+    shortName: "BMC",
+    // context: "Public-utility and urban infrastructure projects",
+  },
+  {
+    name: "Mumbai Metropolitan Region Development Authority",
+    shortName: "MMRDA",
+    // context: "Metropolitan infrastructure project coordination",
+  },
+  {
+    name: "Slum Rehabilitation Authority, Maharashtra",
+    shortName: "SRA",
+    // context: "Urban redevelopment and affordable-housing initiatives",
+  },
+  {
+    name: "Atal Mission for Rejuvenation and Urban Transformation",
+    shortName: "AMRUT",
+    // context: "Urban water and municipal infrastructure initiatives",
+  },
 ];
 
 export default function AboutUsPage() {
@@ -68,7 +102,7 @@ export default function AboutUsPage() {
               </p>
 
               <h1 className="mt-6 max-w-[610px] font-[var(--font-cormorant)] text-[clamp(3.15rem,4.9vw,5.35rem)] font-medium leading-[0.94] tracking-[-0.05em] text-[#173426]">
-                Bringing clarity to regulation, coordination and execution.
+                Regulatory advice grounded in project realities.
               </h1>
 
               <div
@@ -77,32 +111,34 @@ export default function AboutUsPage() {
               >
                 <p>
                   Redimension Realty Private Limited is a Mumbai-based
-                  environmental, regulatory and development advisory firm
-                  supporting complex real estate, infrastructure and
-                  institutional projects across India.
+                  environmental consultancy supporting environmental, forest,
+                  coastal and infrastructure-related regulatory requirements
+                  for complex development projects across India.
                 </p>
 
                 <p>
-                  We combine specialist regulatory understanding with practical
-                  knowledge of project delivery. Our role is to help clients
-                  navigate approvals, coordinate stakeholders and address
-                  compliance requirements with greater clarity and confidence.
+                  We work with developers, project proponents, infrastructure
+                  organisations and multidisciplinary teams that need a clearer
+                  route through regulatory assessment, technical studies,
+                  statutory documentation, authority coordination and ongoing
+                  compliance.
                 </p>
 
                 <p>
-                  The company works with developers, infrastructure project
-                  proponents, institutions, hospitality groups, industrial
-                  developments, coastal assets and urban redevelopment
-                  initiatives.
+                  Because complex projects rarely face a single approval
+                  question, we connect environmental, forest, coastal, planning
+                  and implementation workstreams. This coordinated approach
+                  helps teams understand dependencies, strengthen submissions
+                  and make informed decisions at every stage.
                 </p>
               </div>
 
-              <div className="mt-10 max-w-[590px] border-l-2 border-[#c99a2e] pl-6">
+              {/* <div className="mt-10 max-w-[590px] border-l-2 border-[#c99a2e] pl-6">
                 <p className="font-[var(--font-cormorant)] text-[1.35rem] leading-[1.4] tracking-[-0.015em] text-[#173426] sm:text-[1.6rem]">
-                  Development moves forward when regulatory requirements become
-                  clear, coordinated and actionable.
+                  Our role is to turn overlapping regulatory requirements into
+                  a clear, coordinated and actionable programme of work.
                 </p>
-              </div>
+              </div> */}
             </div>
 
             {/* Editorial image */}
@@ -128,7 +164,7 @@ export default function AboutUsPage() {
 
               <div className="ml-auto flex max-w-[540px] items-start justify-between gap-6 border-b border-[#031126]/15 py-4">
                 <p className="max-w-[370px] text-[10px] font-bold uppercase leading-5 tracking-[0.18em] text-[#9b7426]">
-                  Environmental, regulatory and development advisory
+                  Environmental, forest, coastal and infrastructure advisory
                 </p>
 
                 <span className="text-[10px] font-medium tracking-[0.12em] text-[#173426]/45">
@@ -202,8 +238,9 @@ export default function AboutUsPage() {
 
                 <p className="mt-6 text-[15px] leading-[1.8] text-[#4c596d]">
                   To provide precise, timely and commercially practical
-                  regulatory solutions that help developers, institutions and
-                  project proponents progress with greater certainty.
+                  regulatory advice that helps project teams assess exposure,
+                  prepare credible submissions, coordinate stakeholders and
+                  maintain compliance throughout the development lifecycle.
                 </p>
               </article>
 
@@ -217,9 +254,9 @@ export default function AboutUsPage() {
                 </h3>
 
                 <p className="mt-6 text-[15px] leading-[1.8] text-[#4c596d]">
-                  To be recognised as a trusted multidisciplinary advisory
-                  partner for environmentally responsible development and
-                  complex infrastructure projects across India.
+                  To support responsible development across India through
+                  clear, technically grounded and governance-aligned regulatory
+                  advice.
                 </p>
               </article>
             </div>
@@ -238,8 +275,8 @@ export default function AboutUsPage() {
 
                 <p className="mt-7 max-w-md text-[15px] leading-8 text-[#5b6677]">
                   Our approach is defined by professional judgement, clear
-                  responsibility and a consistent focus on practical project
-                  outcomes.
+                  accountability, client confidentiality and a consistent focus
+                  on practical, well-documented project outcomes.
                 </p>
               </div>
 
@@ -260,6 +297,93 @@ export default function AboutUsPage() {
                     <p className="text-sm leading-7 text-[#596679]">
                       {value.description}
                     </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Selected clients and institutional experience */}
+      <section
+        id="clients-and-associations"
+        className="scroll-mt-32 border-y border-[#031126]/10 bg-[#173426] py-20 text-white sm:py-24 lg:py-28"
+      >
+        <div className="container-shell px-5 sm:px-7 lg:px-10">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#d6ad54]">
+                Clients &amp; Associations
+              </p>
+
+              <h2 className="mt-5 max-w-[600px] font-[var(--font-cormorant)] text-[clamp(2.5rem,3.8vw,4.4rem)] leading-[0.97] tracking-[-0.055em]">
+                Experience across private development and public infrastructure.
+              </h2>
+
+              <p className="mt-7 max-w-md text-[15px] leading-8 text-white/65">
+                Our company portfolio includes regulatory advisory and project
+                coordination experience involving leading organisations across
+                real estate, infrastructure, hospitality and industry, together
+                with institutional and urban-development assignments.
+              </p>
+
+              <Link
+                href="/clients"
+                className="mt-8 inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.16em] text-[#e1bf70] transition-colors hover:text-white"
+              >
+                View our clients <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            <div className="lg:col-span-7">
+              <p className="border-b border-white/20 pb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#d6ad54]">
+                Selected client experience
+              </p>
+
+              <div className="grid sm:grid-cols-2">
+                {selectedClients.map((client, index) => (
+                  <div
+                    key={client}
+                    className="flex items-center gap-4 border-b border-white/15 py-5 sm:odd:border-r sm:odd:pr-6 sm:even:pl-6"
+                  >
+                    <span className="text-[10px] font-bold tracking-[0.15em] text-[#d6ad54]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-sm font-medium leading-6 text-white/90">
+                      {client}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-12 border-b border-white/20 pb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#d6ad54]">
+                Government &amp; institutional associations
+              </p>
+
+              <div className="grid sm:grid-cols-2">
+                {institutionalAssociations.map((association, index) => (
+                  <article
+                    key={association.shortName}
+                    className="border-b border-white/15 py-5 sm:min-h-[142px] sm:odd:border-r sm:odd:pr-6 sm:even:pl-6"
+                  >
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-[10px] font-bold tracking-[0.15em] text-[#d6ad54]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="font-[var(--font-cormorant)] text-2xl text-[#e1bf70]">
+                        {association.shortName}
+                      </p>
+                    </div>
+
+                    <div className="mt-3 pl-[38px]">
+                      <h3 className="text-sm font-semibold leading-6 text-white">
+                        {association.name}
+                      </h3>
+                      {/* <p className="mt-1 text-sm leading-6 text-white/55">
+                        {association.context}
+                      </p> */}
+                    </div>
                   </article>
                 ))}
               </div>
@@ -304,16 +428,17 @@ export default function AboutUsPage() {
 
               <div className="mt-9 space-y-6 text-[16px] leading-[1.85] text-[#4c596d]">
                 <p>
-                  Redimension Realty is led by Mr. Tejas Ajgaonkar, who brings
-                  more than 18 years of experience across real estate
-                  development and environmental, forest and coastal regulatory
-                  consulting.
+                  Tejas Ajgaonkar is the Director of Redimension Realty Private
+                  Limited and brings more than 18 years of experience across
+                  real estate development and environmental, forest and coastal
+                  regulatory consulting.
                 </p>
 
                 <p>
-                  His experience combines an understanding of development
-                  priorities with practical knowledge of statutory processes,
-                  institutional coordination and project execution.
+                  He leads client relationships, regulatory strategy and project
+                  coordination. His experience connects development priorities
+                  with practical knowledge of statutory processes, technical
+                  workstreams, institutional interfaces and project execution.
                 </p>
               </div>
 
@@ -350,12 +475,13 @@ export default function AboutUsPage() {
           <div className="flex flex-col gap-8 rounded-[2rem] bg-[#f1e6b8] px-7 py-9 sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
             <div className="max-w-2xl">
               <p className="font-[var(--font-cormorant)] text-[clamp(1.8rem,2.5vw,2.5rem)] leading-[1.05] tracking-[-0.025em] text-[#173426]">
-                Have a project that requires regulatory clarity?
+                Need a clearer regulatory pathway for your project?
               </p>
 
               <p className="mt-3 max-w-xl text-[14px] leading-7 text-[#536159] sm:text-[15px]">
-                Speak with our team about environmental, regulatory and
-                development requirements for your project.
+                Speak with our team about environmental clearance, forest, CRZ,
+                infrastructure or redevelopment requirements affecting your
+                site and project programme.
               </p>
             </div>
 
@@ -363,7 +489,7 @@ export default function AboutUsPage() {
               href="/contact-us"
               className="group inline-flex min-h-[52px] w-full shrink-0 items-center justify-center gap-3 rounded-full bg-[#173426] px-7 text-[12px] font-semibold tracking-[0.04em] text-white transition duration-300 hover:bg-[#0f5a2d] sm:w-auto"
             >
-              <span>Start a conversation</span>
+              <span>Discuss your project</span>
 
               <span
                 aria-hidden="true"

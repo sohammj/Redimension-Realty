@@ -347,47 +347,33 @@ export default function ClientsPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding pt-0">
+      <section className="bg-[#f7f5ee] px-5 py-20 sm:px-7 sm:py-24 lg:px-10 lg:py-28">
         <div className="container-shell">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-[#031126] p-8 text-white shadow-[0_30px_100px_rgba(3,17,38,0.22)] sm:p-10 lg:p-12">
-            <div className="pointer-events-none absolute right-[-8rem] top-[-8rem] h-[24rem] w-[24rem] rounded-full bg-[#0f5a2d]/35 blur-3xl" />
-            <div className="pointer-events-none absolute bottom-[-10rem] left-[-8rem] h-[24rem] w-[24rem] rounded-full bg-[#d7a329]/20 blur-3xl" />
+          <div className="flex flex-col gap-8 rounded-[2rem] bg-[#f1e6b8] px-7 py-9 sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
+            <div className="max-w-2xl">
+              <p className="font-[var(--font-cormorant)] text-[clamp(1.8rem,2.5vw,2.5rem)] leading-[1.05] tracking-[-0.025em] text-[#173426]">
+                Have a project that requires regulatory clarity?
+              </p>
 
-            <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-              <div>
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-[#d7a329]">
-                  Start a Conversation
-                </p>
-
-                <h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-0.06em] sm:text-5xl">
-                  Have a project requiring regulatory clarity?
-                </h2>
-
-                <p className="mt-5 max-w-2xl text-base leading-8 text-white/70">
-                  Partner with Redimension Realty for structured, compliant and
-                  execution-focused environmental, coastal, forest and statutory
-                  advisory.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-                <Link
-                  href="/contact-us"
-                  className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#d7a329] px-7 text-sm font-black uppercase tracking-[0.16em] text-[#031126] transition hover:scale-[1.02]"
-                >
-                  Request Consultation
-                  <ArrowRight size={17} />
-                </Link>
-
-                <Link
-                  href="/services"
-                  className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-white/20 px-7 text-sm font-black uppercase tracking-[0.16em] text-white transition hover:bg-white/10"
-                >
-                  Explore Services
-                  <ArrowRight size={17} />
-                </Link>
-              </div>
+              <p className="mt-3 max-w-xl text-[14px] leading-7 text-[#536159] sm:text-[15px]">
+                Speak with our team about environmental, regulatory and
+                development requirements for your project.
+              </p>
             </div>
+
+            <Link
+              href="/contact-us"
+              className="group inline-flex min-h-[52px] w-full shrink-0 items-center justify-center gap-3 rounded-full bg-[#173426] px-7 text-[12px] font-semibold tracking-[0.04em] text-white transition duration-300 hover:bg-[#0f5a2d] sm:w-auto"
+            >
+              <span>Start a conversation</span>
+
+              <span
+                aria-hidden="true"
+                className="text-base transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </Link>
           </div>
         </div>
       </section>
