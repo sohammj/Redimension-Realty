@@ -27,25 +27,46 @@ export const navLinks = [
 
 export const coreServices = [
   {
-    title: "Environmental Clearance & EIA",
-    slug: "environmental-clearance-eia",
+    title: "Environmental and Forest Clearance",
+    label: "Environmental approvals",
     summary:
-      "Environmental Impact Assessment preparation, statutory submissions, compliance planning and approval coordination for real estate, infrastructure and industrial projects.",
+      "Support for environmental-clearance applicability, EIA and EMP coordination, forest-diversion proposals, Stage I and Stage II forest-clearance processes, pollution-control consents and post-clearance compliance.",
+    cta: "Explore Environmental and Forest Clearance",
+    href: "/services/environmental-forest-clearance",
+    image:
+      "https://images.unsplash.com/photo-1767917920879-dca2df5f1868?auto=format&fit=crop&w=1600&q=80",
   },
   {
-    title: "Forest Clearance Advisory",
-    slug: "forest-clearance-advisory",
+    title: "CRZ and Coastal Regulatory Advisory",
+    label: "Coastal regulation",
     summary:
-      "Advisory and documentation support for forest clearance requirements, forest-adjacent developments and related regulatory frameworks.",
+      "Coastal applicability and classification review, Coastal Zone Management Plan interpretation, coastal due diligence, statutory documentation and coordination with coastal regulatory authorities.",
+    cta: "Explore CRZ and Coastal Advisory",
+    href: "/services/crz-coastal-regulatory-advisory",
+    image:
+      "https://images.unsplash.com/photo-1750715832891-01d5bd941cf8?auto=format&fit=crop&w=1600&q=80",
   },
   {
-    title: "CRZ & Coastal Regulatory Consulting",
-    slug: "crz-coastal-regulatory-consulting",
+    title: "BMC/MMRDA and Public Infrastructure",
+    label: "Public infrastructure",
     summary:
-      "Coastal Regulation Zone approvals, NOCs, coastal compliance strategy and liaisoning with CZMA and relevant statutory authorities.",
+      "Documentation, approval tracking, stakeholder coordination and project facilitation for municipal, metropolitan and public-utility assignments.",
+    cta: "Explore Infrastructure Support",
+    href: "/services/public-infrastructure",
+    image:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
   },
-];
-
+  {
+    title: "Redevelopment, SRA and Construction",
+    label: "Urban redevelopment",
+    summary:
+      "Regulatory mapping and coordination for urban renewal, affordable housing, redevelopment and construction projects, including environmental and coastal interfaces where applicable.",
+    cta: "Explore Redevelopment Support",
+    href: "/services/redevelopment-sra-construction",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+  },
+] as const;
 export const businessSegments = [
   {
     title: "Environmental, Forest & Coastal Regulatory Consulting",

@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Building2, CheckCircle2, Globe2, Landmark } from "lucide-react";
+import {
+  ArrowUpRight,
+  Building2,
+  Globe2,
+  Landmark,
+  ShieldCheck,
+} from "lucide-react";
 
 export const metadata = {
   title: "Clients | Redimension Realty",
@@ -8,18 +14,19 @@ export const metadata = {
     "Client associations and institutional engagements of Redimension Realty across real estate, infrastructure, industrial and public-sector projects.",
 };
 
+type ClientCategory =
+  | "Real Estate & Developers"
+  | "Infrastructure & Industrial"
+  | "Hospitality & Housing"
+  | "Government & Institutional"
+  | "Other Associations";
+
 type ClientLogo = {
   name: string;
   file: string;
-  category:
-    | "Real Estate & Developers"
-    | "Infrastructure & Industrial"
-    | "Hospitality & Housing"
-    | "Government & Institutional"
-    | "Other Associations";
+  category: ClientCategory;
 };
 
-// const LOGO_BASE_PATH = "/clients";
 const LOGO_BASE_PATH = "/logo";
 
 const clientLogos: ClientLogo[] = [
@@ -103,24 +110,9 @@ const clientLogos: ClientLogo[] = [
     file: "mmrda.png",
     category: "Government & Institutional",
   },
-  // {
-  //   name: "Client Association",
-  //   file: "logo1.png",
-  //   category: "Other Associations",
-  // },
-  // {
-  //   name: "Client Association",
-  //   file: "logo2.png",
-  //   category: "Other Associations",
-  // },
-  // {
-  //   name: "Client Association",
-  //   file: "logo3.png",
-  //   category: "Other Associations",
-  // },
 ];
 
-const categories: ClientLogo["category"][] = [
+const categories: ClientCategory[] = [
   "Real Estate & Developers",
   "Infrastructure & Industrial",
   "Hospitality & Housing",
@@ -128,11 +120,24 @@ const categories: ClientLogo["category"][] = [
   "Other Associations",
 ];
 
+const categoryDescriptions: Record<ClientCategory, string> = {
+  "Real Estate & Developers":
+    "Residential, mixed-use and urban development organisations.",
+  "Infrastructure & Industrial":
+    "Infrastructure contractors, engineering groups and industrial organisations.",
+  "Hospitality & Housing":
+    "Hospitality, housing and integrated development brands.",
+  "Government & Institutional":
+    "Municipal, metropolitan and public-sector authorities.",
+  "Other Associations":
+    "Additional corporate and institutional associations.",
+};
+
 const stats = [
   {
     value: "25–30+",
-    label: "Leading companies advised",
-    icon: CheckCircle2,
+    label: "Leading organisations advised",
+    icon: ShieldCheck,
   },
   {
     value: "Pan-India",
@@ -141,21 +146,14 @@ const stats = [
   },
   {
     value: "Tier-I",
-    label: "Corporate & institutional clientele",
+    label: "Corporate and institutional clientele",
     icon: Building2,
   },
   {
     value: "Public Sector",
-    label: "BMC, MMRDA & government-linked work",
+    label: "BMC, MMRDA and government-linked work",
     icon: Landmark,
   },
-];
-
-const engagements = [
-  "Environmental & Coastal Regulatory Advisory",
-  "Forest and CRZ Clearance Support",
-  "EIA, Statutory Documentation & Compliance",
-  "Regulatory Strategy & Institutional Coordination",
 ];
 
 function getLogoSrc(fileName: string) {
@@ -167,187 +165,193 @@ function getLogoSrc(fileName: string) {
 
 export default function ClientsPage() {
   return (
-    <main className="overflow-hidden bg-[#f7faf7] pt-28">
-      {/* Hero */}
-      <section className="relative section-padding">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[-12rem] top-[-10rem] h-[28rem] w-[28rem] rounded-full bg-[#0f5a2d]/10 blur-3xl" />
-          <div className="absolute right-[-10rem] top-10 h-[26rem] w-[26rem] rounded-full bg-[#d9a520]/10 blur-3xl" />
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#0f5a2d]/20 to-transparent" />
-        </div>
+    <main className="overflow-hidden bg-[#faf9f4] pt-28">
+      <section className="relative isolate px-5 pb-20 pt-16 sm:px-7 sm:pb-24 sm:pt-20 lg:px-10 lg:pb-28 lg:pt-24">
+        {/* Decorative circular lines */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-0 z-0 hidden h-[620px] w-[24%] opacity-[0.1] lg:block"
+          style={{
+            backgroundImage:
+              "repeating-radial-gradient(circle at 120% 50%, transparent 0 28px, rgba(15,90,45,0.7) 29px 30px)",
+          }}
+        />
 
-        <div className="container-shell relative">
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-            <div>
-              <p className="eyebrow">Clients</p>
+        <div className="container-shell relative z-10">
+          {/* Hero */}
+          <div className="max-w-6xl">
+            <p className="eyebrow">Clients</p>
 
-              <h1 className="mt-4 max-w-5xl text-5xl font-black tracking-[-0.07em] text-[#031126] sm:text-6xl lg:text-7xl">
-                Trusted by leading developers, infrastructure groups and public-sector stakeholders.
-              </h1>
+            <h1 className="mt-5 max-w-5xl font-[var(--font-cormorant)] text-[clamp(2.8rem,5vw,5.3rem)] font-medium leading-[0.92] tracking-[-0.055em] text-[#031126]">
+              Trusted by organisations shaping development and infrastructure
+            </h1>
 
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-[#526070]">
-                Redimension Realty works with project proponents across real estate,
-                infrastructure, industrial, hospitality and public utility sectors,
-                supporting them through complex environmental, coastal, forest and
-                statutory approval frameworks.
-              </p>
-            </div>
-
-            <div className="rounded-[2rem] border border-[#071b3a]/10 bg-white/70 p-6 shadow-[0_24px_80px_rgba(3,17,38,0.08)] backdrop-blur-xl">
-              <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0f5a2d]">
-                Client Confidence
-              </p>
-
-              <p className="mt-4 text-2xl font-black tracking-[-0.04em] text-[#031126]">
-                Associations built on regulatory clarity, discretion and execution-focused advisory.
-              </p>
-
-              <div className="mt-6 grid gap-3">
-                {engagements.map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 rounded-2xl border border-[#071b3a]/10 bg-white px-4 py-3"
-                  >
-                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#0f5a2d]/10 text-[#0f5a2d]">
-                      <CheckCircle2 size={17} />
-                    </span>
-                    <span className="text-sm font-bold text-[#243145]">
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <p className="section-subtitle mt-7 max-w-3xl">
+              Redimension Realty works with developers, infrastructure groups,
+              industrial organisations and public authorities navigating
+              environmental, coastal, forest and statutory approval frameworks.
+            </p>
           </div>
 
-          {/* Stats */}
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Credibility strip */}
+          {/* <div className="mt-14 grid border-y border-[#031126]/10 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-[#031126]/10">
             {stats.map((stat) => {
               const Icon = stat.icon;
 
               return (
                 <div
                   key={stat.label}
-                  className="rounded-[1.75rem] border border-[#071b3a]/10 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                  className="group flex min-h-[170px] flex-col justify-between border-b border-[#031126]/10 px-1 py-7 transition sm:px-6 lg:border-b-0 lg:px-7"
                 >
-                  <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-[#031126] text-white">
-                    <Icon size={20} />
+                  <div className="flex items-start justify-between gap-5">
+                    <Icon
+                      size={20}
+                      strokeWidth={1.6}
+                      className="text-[#0f5a2d]"
+                    />
+
+                    <ArrowUpRight
+                      size={15}
+                      strokeWidth={1.5}
+                      className="text-[#c99a2e] opacity-0 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+                    />
                   </div>
 
-                  <p className="text-2xl font-black tracking-[-0.05em] text-[#031126]">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-[#667085]">
-                    {stat.label}
-                  </p>
+                  <div className="mt-8">
+                    <p className="font-[var(--font-cormorant)] text-[2rem] font-semibold leading-none tracking-[-0.04em] text-[#031126]">
+                      {stat.value}
+                    </p>
+
+                    <p className="mt-3 max-w-[220px] text-[12px] font-medium leading-5 text-[#667080]">
+                      {stat.label}
+                    </p>
+                  </div>
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
+          </div> */}
 
-      {/* Logo Wall */}
-      <section className="section-padding pt-0">
-        <div className="container-shell">
-          <div className="rounded-[2.5rem] border border-[#071b3a]/10 bg-white p-4 shadow-[0_30px_100px_rgba(3,17,38,0.08)] sm:p-6 lg:p-8">
-            <div className="mb-8 flex flex-col gap-4 border-b border-[#071b3a]/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <p className="eyebrow">Selected Associations</p>
-                <h2 className="mt-3 max-w-3xl text-4xl font-black tracking-[-0.06em] text-[#031126] sm:text-5xl">
-                  A network of respected names across development and infrastructure.
-                </h2>
-              </div>
-
-              <p className="max-w-md text-sm font-medium leading-7 text-[#667085]">
-                The client wall is organised by sector to communicate the breadth
-                of Redimension Realty’s advisory and institutional engagement.
-              </p>
-            </div>
-
-            <div className="space-y-10">
-              {categories.map((category) => {
-                const logos = clientLogos.filter(
-                  (client) => client.category === category
-                );
-
-                if (!logos.length) return null;
-
-                return (
-                  <div key={category}>
-                    <div className="mb-4 flex items-center gap-3">
-                      <span className="h-px flex-1 bg-[#071b3a]/10" />
-                      <h3 className="text-center text-xs font-black uppercase tracking-[0.2em] text-[#0f5a2d]">
-                        {category}
-                      </h3>
-                      <span className="h-px flex-1 bg-[#071b3a]/10" />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                      {logos.map((client, index) => (
-                        <div
-                          key={`${client.name}-${client.file}-${index}`}
-                          className="grid min-h-[128px] place-items-center rounded-[1.5rem] border border-[#071b3a]/10 bg-[#fbfcfb] p-5"
-                          >
-                          <div className="relative h-16 w-full">
-                            <Image
-                              src={getLogoSrc(client.file)}
-                              alt={`${client.name} logo`}
-                              fill
-                              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 28vw, 180px"
-                              className="object-contain opacity-100"
-                              ></Image>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Engagements */}
-      <section className="section-padding pt-0">
-        <div className="container-shell">
-          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          {/* Associations heading */}
+          {/* <div className="mt-20 grid gap-8 border-t border-[#031126]/10 pt-14 sm:mt-24 sm:pt-16 lg:grid-cols-[1fr_0.7fr] lg:items-end">
             <div>
-              <p className="eyebrow">Nature of Engagements</p>
-              <h2 className="mt-4 text-4xl font-black tracking-[-0.06em] text-[#031126] sm:text-5xl">
-                Advisory support across the complete statutory approval lifecycle.
+              <p className="eyebrow">Selected Associations</p>
+
+              <h2 className="mt-5 max-w-3xl font-[var(--font-cormorant)] text-[clamp(2.6rem,4.5vw,4.7rem)] font-medium leading-[0.93] tracking-[-0.05em] text-[#031126]">
+                A network of respected names across high-compliance sectors
               </h2>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {engagements.map((item, index) => (
-                <div
-                  key={item}
-                  className="rounded-[2rem] border border-[#071b3a]/10 bg-white p-6 shadow-sm"
+            <p className="max-w-[500px] text-[14px] leading-7 text-[#657080] sm:text-[15px] sm:leading-8 lg:justify-self-end">
+              The associations below reflect Redimension Realty’s exposure
+              across real estate, public infrastructure, industrial,
+              hospitality and government assignments.
+            </p>
+          </div> */}
+
+          {/* Categorised logo directory */}
+          <div className="mt-12 border-y border-[#031126]/10">
+            {categories.map((category, categoryIndex) => {
+              const logos = clientLogos.filter(
+                (client) => client.category === category,
+              );
+
+              if (!logos.length) return null;
+
+              return (
+                <section
+                  key={category}
+                  className="grid gap-8 border-b border-[#031126]/10 py-10 last:border-b-0 sm:py-12 lg:grid-cols-[230px_1fr] lg:gap-12"
                 >
-                  <p className="text-sm font-black uppercase tracking-[0.18em] text-[#d7a329]">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
+                  {/* Category information */}
+                  <div className="lg:sticky lg:top-36 lg:self-start">
+                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#c99a2e]">
+                      {String(categoryIndex + 1).padStart(2, "0")}
+                    </p>
 
-                  <h3 className="mt-6 text-2xl font-black tracking-[-0.04em] text-[#031126]">
-                    {item}
-                  </h3>
+                    <h3 className="mt-4 max-w-[220px] font-[var(--font-cormorant)] text-[1.75rem] font-semibold leading-[1] tracking-[-0.035em] text-[#031126]">
+                      {category}
+                    </h3>
 
-                  <p className="mt-4 text-sm font-medium leading-7 text-[#667085]">
-                    Structured support for project proponents navigating
-                    documentation, authority coordination, technical submissions and
-                    compliance-driven execution.
-                  </p>
-                </div>
-              ))}
-            </div>
+                    <p className="mt-4 max-w-[220px] text-[12px] leading-6 text-[#6b7481]">
+                      {categoryDescriptions[category]}
+                    </p>
+
+                    <p className="mt-6 text-[9px] font-bold uppercase tracking-[0.18em] text-[#0f5a2d]">
+                      {logos.length}{" "}
+                      {logos.length === 1 ? "association" : "associations"}
+                    </p>
+                  </div>
+
+                  {/* Logos */}
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+                    {logos.map((client, index) => (
+                      <div
+                        key={`${client.name}-${client.file}-${index}`}
+                        title={client.name}
+                        className="
+                          group/logo
+                          relative
+                          grid min-h-[126px] place-items-center
+                          overflow-hidden
+                          rounded-[1.25rem]
+                          border border-[#031126]/10
+                          bg-white/70
+                          p-5
+                          transition duration-400
+                          hover:-translate-y-1
+                          hover:border-[#c99a2e]/40
+                          hover:bg-white
+                          hover:shadow-[0_18px_45px_rgba(3,17,38,0.09)]
+                        "
+                      >
+                        <div className="relative h-16 w-full">
+                          <Image
+                            src={getLogoSrc(client.file)}
+                            alt={`${client.name} logo`}
+                            fill
+                            sizes="
+                              (max-width: 639px) 45vw,
+                              (max-width: 1023px) 28vw,
+                              180px
+                            "
+                            className="object-contain transition-transform duration-500 group-hover/logo:scale-[1.04]"
+                          />
+                        </div>
+
+                        <div className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-[#c99a2e] transition-transform duration-500 group-hover/logo:scale-x-100" />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+
+          {/* Closing note */}
+          <div className="mt-10 flex flex-col gap-4 border-b border-[#031126]/10 pb-10 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-2xl text-[12px] leading-6 text-[#737c88]">
+              Client and authority logos represent project associations and
+              institutional engagements across different assignments.
+            </p>
+
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#0f5a2d]"
+            >
+              View selected projects
+
+              <ArrowUpRight
+                size={16}
+                strokeWidth={1.6}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-[#f7f5ee] px-5 py-20 sm:px-7 sm:py-24 lg:px-10 lg:py-28">
+      <section className="border-t border-[#031126]/10 bg-[#f7f5ee] px-5 py-20 sm:px-7 sm:py-24 lg:px-10 lg:py-28">
         <div className="container-shell">
           <div className="flex flex-col gap-8 rounded-[2rem] bg-[#f1e6b8] px-7 py-9 sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
             <div className="max-w-2xl">
@@ -367,12 +371,11 @@ export default function ClientsPage() {
             >
               <span>Start a conversation</span>
 
-              <span
-                aria-hidden="true"
-                className="text-base transition-transform duration-300 group-hover:translate-x-1"
-              >
-                →
-              </span>
+              <ArrowUpRight
+                size={16}
+                strokeWidth={1.7}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1"
+              />
             </Link>
           </div>
         </div>
