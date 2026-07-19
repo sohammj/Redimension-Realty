@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import {
+  ArrowUpRight,
+  ChevronDown,
+} from "lucide-react";
 
 import {
   Popover,
@@ -13,305 +17,19 @@ import {
 } from "@headlessui/react";
 
 import {
-  ArrowUpRight,
-  Building2,
-  ChevronDown,
-  Landmark,
-  Leaf,
-  Target,
-  UserRound,
-  Waves,
-  type LucideIcon,
-} from "lucide-react";
+  cardNavItems,
+  desktopLinks,
+  type DesktopLink,
+} from "@/src/config/navigation";
 
 import CardNav from "@/src/components/ui/CardNav";
-
-type DropdownLink = {
-  label: string;
-  href: string;
-  description: string;
-  icon: LucideIcon;
-};
-
-type DesktopLink = {
-  href: string;
-  label: string;
-  dropdown?: DropdownLink[];
-};
-
-const desktopLinks: DesktopLink[] = [
-  {
-    href: "/about-us",
-    label: "About",
-    dropdown: [
-      {
-        label: "Overview",
-        href: "/about-us#overview",
-        description:
-          "An introduction to Redimension Realty and its advisory approach.",
-        icon: Building2,
-      },
-      {
-        label: "Vision, Mission & Values",
-        href: "/about-us#vision-mission-values",
-        description:
-          "The direction and principles guiding every engagement.",
-        icon: Target,
-      },
-      {
-        label: "Leadership",
-        href: "/about-us#leadership",
-        description:
-          "The experience and professional direction behind the company.",
-        icon: UserRound,
-      },
-    ],
-  },
-
-  {
-    href: "/services",
-    label: "Services",
-    dropdown: [
-      {
-        label: "Environmental & Regulatory",
-        href: "/services#environmental-regulatory",
-        description:
-          "Environmental, forest, CRZ and statutory approval advisory.",
-        icon: Leaf,
-      },
-      {
-        label: "Redevelopment & SRA",
-        href: "/services#redevelopment-sra",
-        description:
-          "End-to-end support for redevelopment and rehabilitation projects.",
-        icon: Building2,
-      },
-      {
-        label: "Public Infrastructure",
-        href: "/services#public-infrastructure",
-        description:
-          "Institutional coordination for civic and infrastructure projects.",
-        icon: Landmark,
-      },
-    ],
-  },
-  {
-    href: "/projects",
-    label: "Projects",
-    dropdown: [
-      {
-        label: "Environmental Projects",
-        href: "/projects#environmental",
-        description:
-          "Regulatory, environmental and coastal development engagements.",
-        icon: Leaf,
-      },
-      {
-        label: "Redevelopment Projects",
-        href: "/projects#redevelopment",
-        description:
-          "SRA, housing, rehabilitation and urban redevelopment assignments.",
-        icon: Building2,
-      },
-      {
-        label: "Infrastructure Projects",
-        href: "/projects#infrastructure",
-        description:
-          "Public utility, mobility and institutional infrastructure works.",
-        icon: Landmark,
-      },
-    ],
-  },
-  {
-    href: "/sectors-we-serve",
-    label: "Sectors",
-    dropdown: [
-      {
-        label: "Real Estate & Developers",
-        href: "/sectors-we-serve#real-estate",
-        description:
-          "Advisory and project support for builders and developers.",
-        icon: Building2,
-      },
-      {
-        label: "Government & Infrastructure",
-        href: "/sectors-we-serve#government-infrastructure",
-        description: "Coordination with civic bodies and public institutions.",
-        icon: Landmark,
-      },
-      {
-        label: "Coastal & Environmental",
-        href: "/sectors-we-serve#coastal-environmental",
-        description:
-          "Specialist support for sensitive coastal and environmental projects.",
-        icon: Waves,
-      },
-    ],
-  },
-  {
-    href: "/clients",
-    label: "Clients",
-  },
-  {
-    href: "/blog",
-    label: "Insights",
-  },
-  {
-    href: "/gallery",
-    label: "Gallery",
-  },
-  {
-    href: "/contact-us",
-    label: "Contact",
-  },
-];
-
-const cardNavItems = [
-  {
-    label: "Explore",
-    bgColor: "#0F5A2D",
-    textColor: "#ffffff",
-    links: [
-      {
-        label: "About",
-        href: "/about-us",
-        ariaLabel: "Learn about Redimension Realty",
-        children: [
-          {
-            label: "Overview",
-            href: "/about-us#overview",
-            ariaLabel: "View the Redimension Realty overview",
-          },
-          {
-            label: "Company Story",
-            href: "/about-us#company-story",
-            ariaLabel: "Read the Redimension Realty company story",
-          },
-          {
-            label: "Vision, Mission & Values",
-            href: "/about-us#vision-mission-values",
-            ariaLabel: "View the company vision, mission and values",
-          },
-          {
-            label: "Our Strengths",
-            href: "/about-us#strengths",
-            ariaLabel: "View Redimension Realty strengths",
-          },
-          {
-            label: "Leadership",
-            href: "/about-us#leadership",
-            ariaLabel: "View Redimension Realty leadership",
-          },
-        ],
-      },
-      {
-        label: "Services",
-        href: "/services",
-        ariaLabel: "View all services",
-        children: [
-          {
-            label: "Environmental & Regulatory",
-            href: "/services#environmental-regulatory",
-            ariaLabel: "View environmental and regulatory services",
-          },
-          {
-            label: "Redevelopment & SRA",
-            href: "/services#redevelopment-sra",
-            ariaLabel: "View redevelopment and SRA services",
-          },
-          {
-            label: "Public Infrastructure",
-            href: "/services#public-infrastructure",
-            ariaLabel: "View public infrastructure services",
-          },
-        ],
-      },
-      {
-        label: "Projects",
-        href: "/projects",
-        ariaLabel: "View all projects",
-        children: [
-          {
-            label: "Environmental Projects",
-            href: "/projects#environmental",
-            ariaLabel: "View environmental projects",
-          },
-          {
-            label: "Redevelopment Projects",
-            href: "/projects#redevelopment",
-            ariaLabel: "View redevelopment projects",
-          },
-          {
-            label: "Infrastructure Projects",
-            href: "/projects#infrastructure",
-            ariaLabel: "View infrastructure projects",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Company",
-    bgColor: "#C99A2E",
-    textColor: "#031126",
-    links: [
-      {
-        label: "Sectors",
-        href: "/sectors-we-serve",
-        ariaLabel: "View all sectors served",
-        children: [
-          {
-            label: "Real Estate & Developers",
-            href: "/sectors-we-serve#real-estate",
-            ariaLabel: "View real estate and developer sectors",
-          },
-          {
-            label: "Government & Infrastructure",
-            href: "/sectors-we-serve#government-infrastructure",
-            ariaLabel: "View government and infrastructure sectors",
-          },
-          {
-            label: "Coastal & Environmental",
-            href: "/sectors-we-serve#coastal-environmental",
-            ariaLabel: "View coastal and environmental sectors",
-          },
-        ],
-      },
-      {
-        label: "Clients",
-        href: "/clients",
-        ariaLabel: "View clients",
-      },
-      {
-        label: "Insights",
-        href: "/blog",
-        ariaLabel: "Read insights",
-      },
-      {
-        label: "Gallery",
-        href: "/gallery",
-        ariaLabel: "View gallery",
-      },
-      {
-        label: "Careers",
-        href: "/careers",
-        ariaLabel: "View careers",
-      },
-      {
-        label: "Gallery",
-        href: "/gallery",
-        ariaLabel: "View gallery",
-      },
-    ],
-  },
-];
 
 function isRouteActive(pathname: string, href: string) {
   if (href === "/") {
     return pathname === "/";
   }
 
-  return pathname.startsWith(href);
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function DesktopDropdown({
@@ -410,7 +128,6 @@ function DesktopDropdown({
                 absolute left-1/2 top-full z-[100]
                 w-[430px] -translate-x-1/2
                 origin-top pt-4
-
                 transition duration-200 ease-out
 
                 data-closed:-translate-y-2
@@ -460,12 +177,7 @@ function DesktopDropdown({
                         </span>
 
                         <span className="min-w-0 flex-1">
-                          <span
-                            className="
-                              flex items-center justify-between gap-4
-                              text-[14px] font-semibold text-[#10251a]
-                            "
-                          >
+                          <span className="flex items-center justify-between gap-4 text-[14px] font-semibold text-[#10251a]">
                             {dropdownLink.label}
 
                             <ArrowUpRight
@@ -473,19 +185,13 @@ function DesktopDropdown({
                               className="
                                 shrink-0 text-[#0f5a2d]
                                 transition-transform duration-300
-
                                 group-hover:-translate-y-0.5
                                 group-hover:translate-x-0.5
                               "
                             />
                           </span>
 
-                          <span
-                            className="
-                              mt-1 block text-[12px]
-                              leading-[1.55] text-[#536159]
-                            "
-                          >
+                          <span className="mt-1 block text-[12px] leading-[1.55] text-[#536159]">
                             {dropdownLink.description}
                           </span>
                         </span>
@@ -494,12 +200,7 @@ function DesktopDropdown({
                   })}
                 </div>
 
-                <div
-                  className="
-                    mt-2 border-t border-[#0f5a2d]/10
-                    px-2 pt-2
-                  "
-                >
+                <div className="mt-2 border-t border-[#0f5a2d]/10 px-2 pt-2">
                   <Link
                     href={item.href}
                     onClick={() => close()}
@@ -602,7 +303,6 @@ export function Navbar() {
               className="
                 h-[74px] w-[74px] object-contain
                 drop-shadow-[0_2px_8px_rgba(3,17,38,0.08)]
-
                 xl:h-[80px] xl:w-[80px]
               "
             />

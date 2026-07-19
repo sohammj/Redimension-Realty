@@ -30,6 +30,14 @@ export default function ContactUsPage() {
       <section className="section-padding relative">
         <div
           aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-0 z-0 hidden h-[620px] w-[24%] opacity-[0.11] lg:block"
+          style={{
+            backgroundImage:
+              "repeating-radial-gradient(circle at 120% 50%, transparent 0 28px, rgba(15,90,45,0.7) 29px 30px)",
+          }}
+        />
+        <div
+          aria-hidden="true"
           className="pointer-events-none absolute -right-40 top-10 h-[500px] w-[500px] rounded-full bg-[#0f5a2d]/[0.055] blur-3xl"
         />
 

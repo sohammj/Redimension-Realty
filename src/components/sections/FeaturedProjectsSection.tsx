@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 type Project = {
+  href: string;
   name: string;
   status: string;
   location: string;
@@ -225,7 +226,7 @@ export default function FeaturedProjectsSection({
                     </div>
 
                     <Link
-                      href="/projects"
+                      href={project.href}
                       aria-label={`View ${project.name}`}
                       className="grid h-10 w-10 shrink-0 place-items-center bg-white text-[#213127] transition duration-300 group-hover:bg-[#c6e53f]"
                     >

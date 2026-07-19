@@ -1,20 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+
 import { featuredProjects } from "@/src/data/site";
 
 export const metadata = {
   title: "Projects",
   description:
-    "Project exposure across environmental advisory, BMC/MMRDA infrastructure, SRA housing and AMRUT urban infrastructure.",
+    "Project exposure across environmental advisory, BMC/MMRDA infrastructure, SRA housing and urban development.",
 };
 
 export default function ProjectsPage() {
   return (
     <main className="bg-[#faf9f4] pt-28">
-      {/* Projects */}
       <section className="relative isolate overflow-hidden px-5 pb-20 pt-16 sm:px-7 sm:pb-24 sm:pt-20 lg:px-10 lg:pb-28 lg:pt-24">
-        {/* Decorative circular lines */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute right-0 top-0 z-0 hidden h-[620px] w-[24%] opacity-[0.11] lg:block"
@@ -25,22 +24,10 @@ export default function ProjectsPage() {
         />
 
         <div className="container-shell relative z-10">
-          {/* Page heading */}
           <div className="max-w-6xl">
             <p className="eyebrow">Projects</p>
 
-            <h1
-              className="
-                mt-5
-                max-w-5xl
-                font-[var(--font-cormorant)]
-                text-[clamp(2.8rem,5vw,5.3rem)]
-                font-medium
-                leading-[0.92]
-                tracking-[-0.055em]
-                text-[#031126]
-              "
-            >
+            <h1 className="mt-5 max-w-5xl font-[var(--font-cormorant)] text-[clamp(2.8rem,5vw,5.3rem)] font-medium leading-[0.92] tracking-[-0.055em] text-[#031126]">
               Project experience across infrastructure and development
             </h1>
 
@@ -51,27 +38,21 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          {/* Project grid */}
           <div className="mt-12 grid gap-5 sm:mt-14 md:grid-cols-2 xl:grid-cols-3">
             {featuredProjects.map((project, index) => (
               <article
-                key={project.name}
+                key={project.slug}
                 className="
-                  group
-                  flex min-h-full flex-col
-                  overflow-hidden
-                  border border-[#031126]/10
-                  bg-[#fffdf9]
-                  text-[#031126]
-                  transition duration-500
+                  group flex min-h-full flex-col overflow-hidden
+                  border border-[#031126]/10 bg-[#fffdf9]
+                  text-[#031126] transition duration-500
                   hover:-translate-y-1
                   hover:shadow-[0_24px_60px_rgba(3,17,38,0.12)]
                 "
               >
-                {/* Project image */}
                 <div className="relative aspect-[16/9] overflow-hidden bg-[#d9d8d1]">
                   <Image
-                    src={project.image ?? "/images/redimension-hero.png"}
+                    src={project.image}
                     alt={`${project.name} project`}
                     fill
                     sizes="
@@ -93,10 +74,8 @@ export default function ProjectsPage() {
                   </span>
                 </div>
 
-                {/* Gold divider */}
                 <div className="h-[4px] bg-[#c99a2e]" />
 
-                {/* Project information */}
                 <div className="flex min-h-[285px] flex-1 flex-col p-6 sm:p-7">
                   <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#7b8490]">
                     {project.location}
@@ -122,12 +101,11 @@ export default function ProjectsPage() {
                     </div>
 
                     <Link
-                      href="/contact-us"
-                      aria-label={`Discuss the ${project.name} project`}
+                      href={project.href}
+                      aria-label={`View ${project.name}`}
                       className="
                         grid h-11 w-11 shrink-0 place-items-center
-                        bg-[#031126] text-white
-                        transition duration-300
+                        bg-[#031126] text-white transition duration-300
                         group-hover:bg-[#c99a2e]
                         group-hover:text-[#031126]
                       "
@@ -146,7 +124,6 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="border-t border-[#031126]/10 bg-[#f7f5ee] px-5 py-20 sm:px-7 sm:py-24 lg:px-10 lg:py-28">
         <div className="container-shell">
           <div className="flex flex-col gap-8 rounded-[2rem] bg-[#f1e6b8] px-7 py-9 sm:px-10 sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
@@ -163,16 +140,15 @@ export default function ProjectsPage() {
 
             <Link
               href="/contact-us"
-              className="group inline-flex min-h-[52px] w-full shrink-0 items-center justify-center gap-3 rounded-full bg-[#173426] px-7 text-[12px] font-semibold tracking-[0.04em] text-white transition duration-300 hover:bg-[#0f5a2d] sm:w-auto"
+              className="group inline-flex min-h-[52px] w-full shrink-0 items-center justify-center gap-3 rounded-full bg-[#173426] px-7 text-[12px] font-semibold text-white transition duration-300 hover:bg-[#0f5a2d] sm:w-auto"
             >
-              <span>Start a conversation</span>
+              Start a conversation
 
-              <span
-                aria-hidden="true"
-                className="text-base transition-transform duration-300 group-hover:translate-x-1"
-              >
-                →
-              </span>
+              <ArrowUpRight
+                size={16}
+                strokeWidth={1.7}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1"
+              />
             </Link>
           </div>
         </div>
