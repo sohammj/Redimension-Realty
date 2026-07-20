@@ -27,7 +27,6 @@ type DetailPageTemplateProps = {
   facts: readonly DetailFact[];
   sections: readonly DetailSection[];
   backHref: string;
-  backLabel: string;
   relatedTitle: string;
   relatedLinks: readonly RelatedLink[];
   ctaTitle: string;
@@ -44,7 +43,6 @@ export default function DetailPageTemplate({
   facts,
   sections,
   backHref,
-  backLabel,
   relatedTitle,
   relatedLinks,
   ctaTitle,
@@ -64,7 +62,7 @@ export default function DetailPageTemplate({
         />
 
         <div className="container-shell relative z-10">
-          <Link
+          {/* <Link
             href={backHref}
             className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#0f5a2d]"
           >
@@ -74,8 +72,7 @@ export default function DetailPageTemplate({
               className="transition-transform duration-300 group-hover:-translate-x-1"
             />
 
-            {backLabel}
-          </Link>
+          </Link> */}
 
           <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
             <div className="lg:col-span-7">

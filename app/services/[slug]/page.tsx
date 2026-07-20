@@ -67,7 +67,6 @@ export default async function ServiceDetailPage({
       facts={service.facts}
       sections={service.sections}
       backHref="/services"
-      backLabel="All services"
       relatedTitle="Related regulatory services"
       relatedLinks={relatedServices}
       ctaTitle="Discuss your project requirements"

@@ -55,50 +55,50 @@ const projectDropdown: DropdownLink[] = featuredProjects.map((project) => ({
   icon: projectIcons[project.slug] ?? Building2,
 }));
 
-const sectorDropdown: DropdownLink[] = [
-  {
-    label: "Environmental Consulting",
-    href: "/sectors-we-serve#environmental-consulting",
-    description:
-      "Environmental assessment, approvals and compliance support.",
-    icon: Leaf,
-  },
-  {
-    label: "Infrastructure & Civil Works",
-    href: "/sectors-we-serve#infrastructure-civil-works",
-    description:
-      "Public infrastructure and civil-development coordination.",
-    icon: Construction,
-  },
-  {
-    label: "Real Estate & Redevelopment",
-    href: "/sectors-we-serve#real-estate-redevelopment",
-    description:
-      "Advisory support for development and urban-renewal projects.",
-    icon: Building2,
-  },
-  {
-    label: "Government Projects",
-    href: "/sectors-we-serve#government-projects",
-    description:
-      "Institutional coordination for government assignments.",
-    icon: Landmark,
-  },
-  {
-    label: "Coastal & CRZ Developments",
-    href: "/sectors-we-serve#coastal-crz-developments",
-    description:
-      "Regulatory support for coastal and CRZ-sensitive projects.",
-    icon: Waves,
-  },
-  {
-    label: "Hospitality & Industrial Projects",
-    href: "/sectors-we-serve#hospitality-industrial-projects",
-    description:
-      "Approval and compliance support for commercial developments.",
-    icon: Factory,
-  },
-];
+// const sectorDropdown: DropdownLink[] = [
+//   {
+//     label: "Environmental Consulting",
+//     href: "/sectors-we-serve#environmental-consulting",
+//     description:
+//       "Environmental assessment, approvals and compliance support.",
+//     icon: Leaf,
+//   },
+//   {
+//     label: "Infrastructure & Civil Works",
+//     href: "/sectors-we-serve#infrastructure-civil-works",
+//     description:
+//       "Public infrastructure and civil-development coordination.",
+//     icon: Construction,
+//   },
+//   {
+//     label: "Real Estate & Redevelopment",
+//     href: "/sectors-we-serve#real-estate-redevelopment",
+//     description:
+//       "Advisory support for development and urban-renewal projects.",
+//     icon: Building2,
+//   },
+//   {
+//     label: "Government Projects",
+//     href: "/sectors-we-serve#government-projects",
+//     description:
+//       "Institutional coordination for government assignments.",
+//     icon: Landmark,
+//   },
+//   {
+//     label: "Coastal & CRZ Developments",
+//     href: "/sectors-we-serve#coastal-crz-developments",
+//     description:
+//       "Regulatory support for coastal and CRZ-sensitive projects.",
+//     icon: Waves,
+//   },
+//   {
+//     label: "Hospitality & Industrial Projects",
+//     href: "/sectors-we-serve#hospitality-industrial-projects",
+//     description:
+//       "Approval and compliance support for commercial developments.",
+//     icon: Factory,
+//   },
+// ];
 
 export const desktopLinks: DesktopLink[] = [
   {
@@ -145,11 +145,11 @@ export const desktopLinks: DesktopLink[] = [
     label: "Projects",
     dropdown: projectDropdown,
   },
-  {
-    href: "/sectors-we-serve",
-    label: "Sectors",
-    dropdown: sectorDropdown,
-  },
+//   {
+//     href: "/sectors-we-serve",
+//     label: "Sectors",
+//     dropdown: sectorDropdown,
+//   },
   {
     href: "/clients",
     label: "Clients",
@@ -228,16 +228,16 @@ export const cardNavItems = [
     bgColor: "#C99A2E",
     textColor: "#031126",
     links: [
-      {
-        label: "Sectors",
-        href: "/sectors-we-serve",
-        ariaLabel: "View all sectors",
-        children: sectorDropdown.map((sector) => ({
-          label: sector.label,
-          href: sector.href,
-          ariaLabel: `View ${sector.label}`,
-        })),
-      },
+    //   {
+    //     label: "Sectors",
+    //     href: "/sectors-we-serve",
+    //     ariaLabel: "View all sectors",
+    //     children: sectorDropdown.map((sector) => ({
+    //       label: sector.label,
+    //       href: sector.href,
+    //       ariaLabel: `View ${sector.label}`,
+    //     })),
+    //   },
       {
         label: "Clients",
         href: "/clients",

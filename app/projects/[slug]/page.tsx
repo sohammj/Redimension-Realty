@@ -66,7 +66,6 @@ export default async function ProjectDetailPage({
       facts={project.facts}
       sections={project.sections}
       backHref="/projects"
-      backLabel="All projects"
       relatedTitle="Other selected projects"
       relatedLinks={relatedProjects}
       ctaTitle="Have a similar project requirement?"
