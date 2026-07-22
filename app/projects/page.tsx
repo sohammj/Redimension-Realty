@@ -206,62 +206,30 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function ProjectsBySectorPage() {
   return (
-    <main className="bg-[#faf9f4] pt-28">
-      <section className="relative isolate overflow-hidden px-5 pb-16 pt-16 sm:px-7 sm:pb-20 sm:pt-20 lg:px-10 lg:pt-24">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-0 top-0 hidden h-[620px] w-[24%] opacity-[0.11] lg:block"
-          style={{
-            backgroundImage:
-              "repeating-radial-gradient(circle at 120% 50%, transparent 0 28px, rgba(15,90,45,0.7) 29px 30px)",
-          }}
-        />
+    <main className="bg-[#faf9f4] pt-20">
+      <section
+        className="relative min-h-[650px] overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/bg1.jpg')" }}
+      >
+        {/* Dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031126]/85 via-[#031126]/55 to-[#031126]/20" />
 
-        <div className="container-shell relative z-10">
+        <div className="container-shell relative z-10 flex min-h-[650px] items-center">
           <div className="max-w-6xl">
-            <p className="eyebrow">Sectors & Projects</p>
-            <h1 className="mt-5 max-w-5xl font-[var(--font-cormorant)] text-[clamp(2.8rem,5vw,5.3rem)] font-medium leading-[0.92] tracking-[-0.055em] text-[#031126]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d29a2e]">
+              Sectors & Projects
+            </p>
+
+            <h1 className="mt-5 max-w-5xl font-[var(--font-cormorant)] text-[clamp(2.8rem,5vw,5.3rem)] font-medium leading-[0.92] tracking-[-0.055em] text-white">
               Project experience shaped around each sector
             </h1>
-            <p className="section-subtitle mt-7 max-w-3xl">
+
+            <p className="mt-7 max-w-3xl text-[16px] leading-7 text-white/75">
               Explore our sector-specific regulatory expertise and the projects
               supported through environmental assessment, statutory approvals,
               institutional coordination and disciplined execution.
             </p>
           </div>
-
-          {/* <nav
-            aria-label="Browse projects by sector"
-            className="mt-12 grid gap-px overflow-hidden border border-[#031126]/10 bg-[#031126]/10 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {sectors.map((sector, index) => {
-              const Icon = sector.icon;
-              const projectCount = projectsForSector(sector).length;
-              return (
-                <Link
-                  key={sector.id}
-                  href={`#${sector.id}`}
-                  className="group flex items-center gap-4 bg-[#fffdf9] p-5 transition hover:bg-[#f1e6b8] sm:p-6"
-                >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center border border-[#031126]/10 bg-[#f6f2e8] text-[#0f5a2d]">
-                    <Icon size={20} strokeWidth={1.7} />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[8px] font-bold uppercase tracking-[0.18em] text-[#8a6b27]">
-                      {String(index + 1).padStart(2, "0")} · {projectCount} {projectCount === 1 ? "project" : "projects"}
-                    </span>
-                    <span className="mt-1 block font-[var(--font-cormorant)] text-xl font-semibold leading-tight text-[#031126]">
-                      {sector.name}
-                    </span>
-                  </span>
-                  <ArrowRight
-                    size={17}
-                    className="shrink-0 transition-transform group-hover:translate-x-1"
-                  />
-                </Link>
-              );
-            })}
-          </nav> */}
         </div>
       </section>
 

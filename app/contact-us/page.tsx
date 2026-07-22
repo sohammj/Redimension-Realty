@@ -26,8 +26,9 @@ export default function ContactUsPage() {
   )}`;
 
   return (
-    <main className="overflow-hidden bg-[#f5f1e8] pt-24 sm:pt-28">
+    <main className="overflow-hidden bg-[#f5f1e8]">
       <section className="section-padding relative">
+        {/* Decorative background */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute right-0 top-0 z-0 hidden h-[620px] w-[24%] opacity-[0.11] lg:block"
@@ -36,6 +37,7 @@ export default function ContactUsPage() {
               "repeating-radial-gradient(circle at 120% 50%, transparent 0 28px, rgba(15,90,45,0.7) 29px 30px)",
           }}
         />
+
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-40 top-10 h-[500px] w-[500px] rounded-full bg-[#0f5a2d]/[0.055] blur-3xl"
@@ -43,42 +45,31 @@ export default function ContactUsPage() {
 
         <div className="container-shell relative">
           {/* Page heading */}
-          <div className="grid gap-6 border-b border-[#17331f]/10 pb-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:pb-14">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9b7426] sm:text-[11px]">
-                Contact us
-              </p>
-
-              {/* <h1 className="mt-5 max-w-[760px] font-[var(--font-cormorant)] text-[clamp(3.2rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.055em] text-[#17331f]">
-                Start a conversation about your project.
-              </h1> */}
-            </div>
-
-            {/* <div className="lg:flex lg:justify-end">
-              <p className="max-w-[520px] text-[14px] leading-7 text-[#405348]/80 sm:text-[15px] sm:leading-8">
-                Speak with our team regarding environmental approvals,
-                regulatory liaisoning, redevelopment, construction or
-                infrastructure requirements.
-              </p>
-            </div> */}
+          <div className="border-b border-[#17331f]/10 pb-8 lg:pb-10">
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9b7426] sm:text-[11px]">
+              Contact us
+            </p>
           </div>
 
-          {/* Form and map */}
-          <div className="mt-10 grid overflow-hidden border border-[#17331f]/10 bg-white/40 shadow-[0_30px_90px_rgba(3,17,38,0.07)] lg:mt-14 lg:grid-cols-[0.95fr_1.05fr]">
-            {/* Enquiry form */}
-            <div className="p-6 sm:p-9 lg:p-12 xl:p-14">
-              <div className="mb-9">
+          {/* Form + Map */}
+          <div className="mt-8 grid overflow-hidden rounded-[28px] border border-[#17331f]/10 bg-white/40 shadow-[0_30px_90px_rgba(3,17,38,0.07)] lg:mt-10 lg:h-[680px] lg:grid-cols-[0.95fr_1.05fr]">
+            {/* =========================
+                ENQUIRY FORM
+            ========================== */}
+            <div className="overflow-y-auto p-6 sm:p-8 lg:p-9 xl:p-10">
+              <div className="mb-6">
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0f5a2d]">
                   Send an enquiry
                 </p>
 
-                <h2 className="mt-3 font-[var(--font-cormorant)] text-[clamp(2.2rem,3.5vw,3.4rem)] font-medium leading-none tracking-[-0.04em] text-[#17331f]">
+                <h2 className="mt-3 max-w-[500px] font-[var(--font-cormorant)] text-[clamp(2.2rem,3.5vw,3.4rem)] font-medium leading-[0.95] tracking-[-0.04em] text-[#17331f]">
                   Tell us how we can help.
                 </h2>
               </div>
 
-              <form className="space-y-6">
-                <div className="grid gap-6 sm:grid-cols-2">
+              <form className="space-y-4">
+                {/* Name + Company */}
+                <div className="grid gap-4 sm:grid-cols-2">
                   <FormField
                     id="name"
                     label="Full name"
@@ -94,7 +85,8 @@ export default function ContactUsPage() {
                   />
                 </div>
 
-                <div className="grid gap-6 sm:grid-cols-2">
+                {/* Email + Phone */}
+                <div className="grid gap-4 sm:grid-cols-2">
                   <FormField
                     id="email"
                     label="Email address"
@@ -112,6 +104,7 @@ export default function ContactUsPage() {
                   />
                 </div>
 
+                {/* Service */}
                 <div>
                   <label
                     htmlFor="service"
@@ -125,7 +118,7 @@ export default function ContactUsPage() {
                     name="service"
                     required
                     defaultValue=""
-                    className="h-14 w-full appearance-none border border-[#17331f]/15 bg-white/60 px-4 text-sm text-[#17331f] outline-none transition duration-300 focus:border-[#0f5a2d] focus:bg-white"
+                    className="h-12 w-full appearance-none rounded-xl border border-[#17331f]/15 bg-white/60 px-4 text-sm text-[#17331f] outline-none transition duration-300 focus:border-[#0f5a2d] focus:bg-white"
                   >
                     <option value="" disabled>
                       Select a service
@@ -157,6 +150,7 @@ export default function ContactUsPage() {
                   </select>
                 </div>
 
+                {/* Project Details */}
                 <div>
                   <label
                     htmlFor="message"
@@ -168,16 +162,17 @@ export default function ContactUsPage() {
                   <textarea
                     id="message"
                     name="message"
-                    rows={6}
+                    rows={4}
                     required
                     placeholder="Briefly describe your project or requirement"
-                    className="w-full resize-none border border-[#17331f]/15 bg-white/60 px-4 py-4 text-sm leading-6 text-[#17331f] outline-none transition duration-300 placeholder:text-[#405348]/45 focus:border-[#0f5a2d] focus:bg-white"
+                    className="w-full resize-none rounded-xl border border-[#17331f]/15 bg-white/60 px-4 py-3 text-sm leading-6 text-[#17331f] outline-none transition duration-300 placeholder:text-[#405348]/45 focus:border-[#0f5a2d] focus:bg-white"
                   />
                 </div>
 
+                {/* Submit */}
                 <button
                   type="button"
-                  className="group flex h-14 w-full items-center justify-center gap-3 bg-[#0f5a2d] px-7 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-[#0b4824] hover:shadow-[0_16px_35px_rgba(15,90,45,0.2)]"
+                  className="group flex h-12 w-full items-center justify-center gap-3 rounded-full bg-[#0f5a2d] px-7 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-[#0b4824] hover:shadow-[0_16px_35px_rgba(15,90,45,0.2)]"
                 >
                   Submit enquiry
 
@@ -190,8 +185,10 @@ export default function ContactUsPage() {
               </form>
             </div>
 
-            {/* Office map */}
-            <div className="relative min-h-[620px] border-t border-[#17331f]/10 sm:min-h-[570px] lg:min-h-full lg:border-l lg:border-t-0">
+            {/* =========================
+                OFFICE MAP
+            ========================== */}
+            <div className="relative min-h-[500px] border-t border-[#17331f]/10 sm:min-h-[520px] lg:min-h-0 lg:border-l lg:border-t-0">
               <iframe
                 title="Redimension Realty office location"
                 src={mapEmbedUrl}
@@ -201,14 +198,18 @@ export default function ContactUsPage() {
                 className="absolute inset-0 h-full w-full border-0 grayscale-[15%]"
               />
 
+              {/* Map gradient */}
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031126]/25 via-transparent to-transparent"
               />
 
-              {/* Contact information */}
-              <div className="absolute inset-x-4 bottom-4 border border-white/40 bg-[#f8f5ec]/90 p-6 shadow-[0_20px_60px_rgba(3,17,38,0.2)] backdrop-blur-2xl sm:inset-x-6 sm:bottom-6 sm:p-8">
-                <div className="flex flex-col gap-7 sm:flex-row sm:items-start sm:justify-between">
+              {/* =========================
+                  OFFICE INFORMATION CARD
+              ========================== */}
+              <div className="absolute inset-x-4 bottom-4 rounded-[22px] border border-white/40 bg-[#f8f5ec]/90 p-5 shadow-[0_20px_60px_rgba(3,17,38,0.2)] backdrop-blur-2xl sm:inset-x-6 sm:bottom-6 sm:p-6">
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+                  {/* Office details */}
                   <div className="max-w-[340px]">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9b7426]">
                       Our office
@@ -222,7 +223,7 @@ export default function ContactUsPage() {
                       href={directionsUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="group mt-5 flex items-start gap-3 text-sm leading-6 text-[#405348] transition-colors hover:text-[#0f5a2d]"
+                      className="group mt-4 flex items-start gap-3 text-sm leading-6 text-[#405348] transition-colors hover:text-[#0f5a2d]"
                     >
                       <MapPin
                         size={18}
@@ -234,7 +235,8 @@ export default function ContactUsPage() {
                     </a>
                   </div>
 
-                  <div className="space-y-4 border-t border-[#17331f]/10 pt-6 text-sm sm:min-w-[220px] sm:border-l sm:border-t-0 sm:pl-7 sm:pt-0">
+                  {/* Contact details */}
+                  <div className="space-y-3 border-t border-[#17331f]/10 pt-5 text-sm sm:min-w-[220px] sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
                     <a
                       href={createTelephoneLink(siteConfig.phone)}
                       className="flex items-center gap-3 text-[#405348] transition-colors hover:text-[#0f5a2d]"
@@ -315,7 +317,7 @@ function FormField({
         required
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className="h-14 w-full border border-[#17331f]/15 bg-white/60 px-4 text-sm text-[#17331f] outline-none transition duration-300 placeholder:text-[#405348]/45 focus:border-[#0f5a2d] focus:bg-white"
+        className="h-12 w-full rounded-xl border border-[#17331f]/15 bg-white/60 px-4 text-sm text-[#17331f] outline-none transition duration-300 placeholder:text-[#405348]/45 focus:border-[#0f5a2d] focus:bg-white"
       />
     </div>
   );
