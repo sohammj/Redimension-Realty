@@ -44,8 +44,9 @@ export default function BlogPage() {
               const isFeatured = index === 0;
 
               return (
-                <article
-                  key={post.title}
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
                   className={`
                     group
                     relative
@@ -90,6 +91,8 @@ export default function BlogPage() {
                       font-semibold
                       tracking-[-0.045em]
                       text-[#031126]
+                      transition-colors duration-300
+                      group-hover:text-[#0f5a2d]
                       ${
                         isFeatured
                           ? "mt-5 text-[clamp(2.5rem,4.4vw,4.8rem)] leading-[0.92]"
@@ -133,7 +136,7 @@ export default function BlogPage() {
                       />
                     </span>
                   </div>
-                </article>
+                </Link>
               );
             })}
           </div>

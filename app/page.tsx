@@ -151,9 +151,9 @@ export default function Home() {
       </section>
 
       <CompanySnapshotSection />
+      <TrustedBySection clients={clientLogos} />
       <CoreServicesSection />
       <WhyChooseUsSection />
-      <TrustedBySection clients={clientLogos} />
       <FeaturedProjectsSection projects={featuredProjects} />
       <ContactSection />
     </main>

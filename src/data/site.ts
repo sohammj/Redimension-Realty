@@ -17,7 +17,7 @@ export const navLinks = [
   { label: "About Us", href: "/about-us" },
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
-  { label: "Sectors", href: "/sectors-we-serve" },
+  // { label: "Sectors", href: "/sectors-we-serve" },
   { label: "Gallery", href: "/gallery" },
   { label: "Blog", href: "/blog" },
   { label: "Clients", href: "/clients" },
@@ -412,26 +412,132 @@ export const values = [
   },
 ] as const;
 
+
+
 export const blogPosts = [
   {
-    title: "Understanding CRZ Approvals for Coastal Development Projects",
+    slug: "environmental-clearance-for-development-projects",
+
+    title:
+      "Environmental Clearance for Development Projects: Understanding the Regulatory Pathway",
+
+    category: "Environmental Regulation",
+
+    excerpt:
+      "An overview of the environmental clearance process, regulatory requirements and key considerations for development projects.",
+
+    date: "July 23, 2026",
+
+    readTime: "6 min read",
+
+    author: "Redimension Realty",
+
+    content: [
+      {
+        heading: "Understanding Environmental Clearance",
+        paragraphs: [
+          "Environmental clearance is an important regulatory requirement for several categories of development projects. The process is designed to assess the potential environmental impact of a proposed project before development begins.",
+
+          "Depending on the nature, scale and location of a project, different statutory approvals and assessments may be required before construction or development activities can proceed.",
+        ],
+      },
+
+      {
+        heading: "Why Environmental Assessment Matters",
+        paragraphs: [
+          "Environmental assessment helps identify potential impacts relating to ecology, water resources, land use, pollution and surrounding communities.",
+
+          "For developers and project proponents, early regulatory planning can help reduce delays and improve the overall efficiency of the approval process.",
+        ],
+      },
+
+      {
+        heading: "Regulatory Coordination",
+        paragraphs: [
+          "Complex development projects often involve coordination with multiple government departments and regulatory authorities.",
+
+          "A structured approach to documentation, technical assessment and institutional liaisoning can help ensure that regulatory requirements are addressed systematically.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "crz-regulations-and-coastal-development",
+
+    title:
+      "CRZ Regulations and Coastal Development: Key Considerations for Project Planning",
+
     category: "Coastal Regulation",
+
     excerpt:
-      "A practical overview of how project proponents can approach CRZ approvals, documentation and authority coordination.",
+      "Understanding the regulatory considerations that influence development activities in coastal areas.",
+
+    date: "July 18, 2026",
+
+    readTime: "5 min read",
+
+    author: "Redimension Realty",
+
+    content: [
+      {
+        heading: "Coastal Regulation and Development",
+        paragraphs: [
+          "Development activities located within regulated coastal areas require careful consideration of applicable coastal zone regulations and environmental conditions.",
+
+          "Understanding the applicable coastal classification and regulatory framework is an important first step in determining the approval pathway for a project.",
+        ],
+      },
+
+      {
+        heading: "Project Planning Considerations",
+        paragraphs: [
+          "Early identification of regulatory requirements allows project teams to incorporate compliance considerations into the planning and design process.",
+
+          "This can help avoid unnecessary delays during later stages of project development.",
+        ],
+      },
+    ],
   },
+
   {
-    title: "Why Early Environmental Due Diligence Matters",
-    category: "Environmental Advisory",
+    slug: "forest-clearance-for-infrastructure-projects",
+
+    title:
+      "Forest Clearance for Infrastructure Projects: What Project Proponents Should Know",
+
+    category: "Forest Clearance",
+
     excerpt:
-      "How pre-project regulatory assessment can reduce approval risk and improve project execution timelines.",
+      "Key regulatory considerations for infrastructure and development projects involving forest land or forest-related approvals.",
+
+    date: "July 12, 2026",
+
+    readTime: "7 min read",
+
+    author: "Redimension Realty",
+
+    content: [
+      {
+        heading: "The Importance of Forest Clearance",
+        paragraphs: [
+          "Infrastructure and development projects involving forest land may require specific statutory approvals before project activities can proceed.",
+
+          "The approval process involves documentation, technical assessment and coordination with the relevant authorities.",
+        ],
+      },
+
+      {
+        heading: "Planning for Regulatory Compliance",
+        paragraphs: [
+          "Identifying forest-related regulatory requirements at the initial stage of a project can help create a more predictable development pathway.",
+
+          "Project proponents should consider regulatory requirements alongside technical and commercial planning.",
+        ],
+      },
+    ],
   },
-  {
-    title: "Sustainable Development and Statutory Compliance in India",
-    category: "Sustainability",
-    excerpt:
-      "Balancing growth, governance and ecological responsibility across real estate and infrastructure projects.",
-  },
-] as const;
+];
 
 export const featuredProjects = [
   {
@@ -543,6 +649,7 @@ export const featuredProjects = [
       },
     ],
   },
+  
   {
     slug: "sra-housing-development",
     href: "/projects/sra-housing-development",

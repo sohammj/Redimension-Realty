@@ -104,36 +104,6 @@ export const desktopLinks: DesktopLink[] = [
   {
     href: "/about-us",
     label: "About",
-    dropdown: [
-      {
-        label: "Overview",
-        href: "/about-us#overview",
-        description:
-          "An introduction to Redimension Realty and its advisory approach.",
-        icon: Building2,
-      },
-      {
-        label: "Company Story",
-        href: "/about-us#company-story",
-        description:
-          "How the company approaches complex regulatory assignments.",
-        icon: Building2,
-      },
-      {
-        label: "Vision, Mission & Values",
-        href: "/about-us#vision-mission-values",
-        description:
-          "The direction and principles guiding every engagement.",
-        icon: Target,
-      },
-      {
-        label: "Leadership",
-        href: "/about-us#leadership",
-        description:
-          "The professional experience behind the company.",
-        icon: UserRound,
-      },
-    ],
   },
   {
     href: "/services",
@@ -178,28 +148,6 @@ export const cardNavItems = [
         label: "About",
         href: "/about-us",
         ariaLabel: "Learn about Redimension Realty",
-        children: [
-          {
-            label: "Overview",
-            href: "/about-us#overview",
-            ariaLabel: "View company overview",
-          },
-          {
-            label: "Company Story",
-            href: "/about-us#company-story",
-            ariaLabel: "Read the company story",
-          },
-          {
-            label: "Vision, Mission & Values",
-            href: "/about-us#vision-mission-values",
-            ariaLabel: "View company vision, mission and values",
-          },
-          {
-            label: "Leadership",
-            href: "/about-us#leadership",
-            ariaLabel: "View company leadership",
-          },
-        ],
       },
       {
         label: "Services",
